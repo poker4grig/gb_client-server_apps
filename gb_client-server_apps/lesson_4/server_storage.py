@@ -1,6 +1,10 @@
 import json
 import time
 
+# contact_list - словарь с данными о пользователях - ключ - имя пользователя,
+# значение - кортеж ("пароль", "статус")
+contact_list = {'poker4grig': ("1", "offline")}
+
 response_code_alert = {
     100: "basic notification ",
     101: "important notice",
@@ -33,6 +37,24 @@ err_presence_response = json.dumps(
 
 ################################functions#####################################
 
+def check_request(request):
+    checked_message = None
+    if isinstance(request, dict) and "action" in request and "time" in request:
+        # Получили правильный запрос
+        if request["action"] == 'presence':
+            checked_message = action_presence(request, contact_list)
+        elif request["action"] == 'authenticate':
+            pass
+        elif request["action"] == 'msg':
+            pass
+        elif request["action"] == 'join':
+            pass
+        elif request["action"] == 'leave':
+            pass
+        elif request["action"] == 'quit':
+            checked_message = 'close'
+    return checked_message
+
 
 def action_presence(request, contact_list):
     if "user" in request and "account_name" in request["user"]:
@@ -42,7 +64,7 @@ def action_presence(request, contact_list):
             # добавляем пользователя в contact_list
             contact_list.update({request["user"]["account_name"]: ('None',
                                                                    'online')})
-            print(contact_list)
+            # print(contact_list)
     else:
         send_message = err_presence_response.encode('utf-8')
         return send_message
