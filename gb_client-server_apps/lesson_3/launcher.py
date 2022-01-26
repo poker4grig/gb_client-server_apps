@@ -7,8 +7,8 @@ PROCESS = []
 while True:
     ACTION = input('Выберите действие: q - выход, '
                    's - запустить сервер и клиенты, x - закрыть все окна: ')
-    args_server = ['python', 'server.py', '-a', '', '-p', '7777']
-    args_client = ['python', 'server.py', '-a', 'localhost', '-p', '7777']
+    args_server = ['python', 'server.py', '-a', '127.0.0.1', '-p', '7777']
+    args_client = ['python', 'server.py', '-a', '127.0.0.1', '-p', '7777']
     if ACTION == 'q':
         break
     elif ACTION == 's':
