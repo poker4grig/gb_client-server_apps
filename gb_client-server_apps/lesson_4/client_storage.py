@@ -1,4 +1,17 @@
 import time
+import argparse
+
+size_of_recv = 4096
+
+argv_parser = argparse.ArgumentParser(
+    prog='command_line_client',
+    description='аргументы командной строки клиента',
+    epilog='автор - poker4grig'
+)
+argv_parser.add_argument('-a', '--addr', nargs='?', default='127.0.0.1',
+                         help='help')
+argv_parser.add_argument('-p', '--port', nargs='?', default=7777)
+argv = argv_parser.parse_args()
 
 current_user = ('poker4grig', "1")
 presence_msg = {
