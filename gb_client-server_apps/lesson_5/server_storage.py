@@ -1,9 +1,14 @@
 import json
+import logging
 import time
+
+LOG = logging.getLogger('app.server')
 
 # contact_list - словарь с данными о пользователях - ключ - имя пользователя,
 # значение - кортеж ("пароль", "статус")
 contact_list = {'poker4grig': ("1", "offline")}
+ADDR = ''
+PORT = 7777
 
 response_code_alert = {
     100: "basic notification ",
@@ -60,8 +65,11 @@ def action_presence(request, contact_list):
     if "user" in request and "account_name" in request["user"]:
         if request["user"]["account_name"] in contact_list:
             contact_list[request["user"]["account_name"][1]] = "online"
+            LOG.info(
+                f"Пользователь {request['user']['account_name']} имеет статус <онлайн>")
         else:
-            # добавляем пользователя в contact_list
+            LOG.info(
+                f"Функция {action_presence.__name__} добавила пользователя {request['user']['account_name']} в контактный лист")
             contact_list.update({request["user"]["account_name"]: ('None',
                                                                    'online')})
             # print(contact_list)

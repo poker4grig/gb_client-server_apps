@@ -1,6 +1,12 @@
+import logging
 import time
 
+LOG = logging.getLogger("app.client")
+
 current_user = ('poker4grig', "1")
+ADDR = '127.0.0.1'
+PORT = 7777
+
 presence_msg = {
     "action": "presence"
 }
@@ -11,6 +17,8 @@ auth_msg = {
 
 
 def send_message(msg):
+    LOG.debug(
+        f'В функцию <<{send_message.__name__}>> поступил шаблон сообщения: {msg}.')
     if msg["action"] == 'presence':
         msg["time"] = time.time()
         msg["type"] = "online"
@@ -22,7 +30,10 @@ def send_message(msg):
         msg.update({"user": {"account_name": current_user[0],
                              "password": current_user[1]}})
     else:
+        LOG.critical(f'Сообщение не сформировано. Неверный шаблон!')
         return None
+    LOG.info(
+        f'Формирование сообщения для <<{msg["user"]["account_name"]}>> завершилось успешно.')
     return msg
 
 # presence_msg = {
