@@ -1,6 +1,22 @@
 import json
+import logging
 import time
+import argparse
 
+LOG = logging.getLogger('app.server')
+
+ADDR = ''
+PORT = 7777
+size_of_recv = 4096
+
+argv_parser = argparse.ArgumentParser(
+    prog='command_line_server',
+    description='аргументы командной строки сервера',
+    epilog='автор - poker4grig'
+)
+argv_parser.add_argument('-a', '--addr', nargs='?', default=ADDR, help='help')
+argv_parser.add_argument('-p', '--port', nargs='?', default=PORT, help='help')
+argv = argv_parser.parse_args()
 # contact_list - словарь с данными о пользователях - ключ - имя пользователя,
 # значение - кортеж ("пароль", "статус")
 contact_list = {'poker4grig': ("1", "offline")}
@@ -60,8 +76,11 @@ def action_presence(request, contact_list):
     if "user" in request and "account_name" in request["user"]:
         if request["user"]["account_name"] in contact_list:
             contact_list[request["user"]["account_name"][1]] = "online"
+            LOG.info(
+                f"Пользователь {request['user']['account_name']} имеет статус <онлайн>")
         else:
-            # добавляем пользователя в contact_list
+            LOG.info(
+                f"Функция {action_presence.__name__} добавила пользователя {request['user']['account_name']} в контактный лист")
             contact_list.update({request["user"]["account_name"]: ('None',
                                                                    'online')})
             # print(contact_list)
