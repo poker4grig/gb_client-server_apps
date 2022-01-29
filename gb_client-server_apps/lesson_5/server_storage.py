@@ -1,14 +1,25 @@
 import json
 import logging
 import time
+import argparse
 
 LOG = logging.getLogger('app.server')
 
+ADDR = ''
+PORT = 7777
+size_of_recv = 4096
+
+argv_parser = argparse.ArgumentParser(
+    prog='command_line_server',
+    description='аргументы командной строки сервера',
+    epilog='автор - poker4grig'
+)
+argv_parser.add_argument('-a', '--addr', nargs='?', default=ADDR, help='help')
+argv_parser.add_argument('-p', '--port', nargs='?', default=PORT, help='help')
+argv = argv_parser.parse_args()
 # contact_list - словарь с данными о пользователях - ключ - имя пользователя,
 # значение - кортеж ("пароль", "статус")
 contact_list = {'poker4grig': ("1", "offline")}
-ADDR = ''
-PORT = 7777
 
 response_code_alert = {
     100: "basic notification ",

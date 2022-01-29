@@ -1,31 +1,22 @@
-import argparse
 import json
 import logging
 from socket import socket, AF_INET, SOCK_STREAM
-from client_storage import presence_msg, send_message, PORT, ADDR
+from client_storage import presence_msg, send_message, PORT, ADDR, argv, \
+    size_of_recv
 import logs.client_log_config
 
 LOG = logging.getLogger("app.client")
 
-argv_parser = argparse.ArgumentParser(
-    prog='command_line_client',
-    description='аргументы командной строки клиента',
-    epilog='автор - poker4grig'
-)
-argv_parser.add_argument('-a', '--addr', nargs='?', default=ADDR,
-                         help='help')
-argv_parser.add_argument('-p', '--port', nargs='?', default=PORT)
-argv = argv_parser.parse_args()
-
 client_socket = socket(AF_INET, SOCK_STREAM)
 # client_socket.connect((argv.addr, int(argv.port))) # Включить для ком.строки
 client_socket.connect((ADDR, PORT))  # Выключить
+
 LOG.debug(f'Передача шаблона сообщения: {presence_msg} для функции <<{send_message.__name__}>>')
 client_socket.send(json.dumps(send_message(presence_msg)).encode('utf-8'))
 LOG.debug(f'Функция <<{send_message.__name__}>> отправила на сервер сообщение: {presence_msg}')
 
 while True:
-    req = client_socket.recv(4096)
+    req = client_socket.recv(size_of_recv)
     if not req:
         break
     else:
@@ -34,4 +25,5 @@ while True:
         response = 'Some message!'
         client_socket.send(json.dumps(response).encode('utf-8'))
         LOG.debug(f'На сервер отправлено сообщение: {response}')
+LOG.info(f'Закрытие соединения')
 client_socket.close()

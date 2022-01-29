@@ -1,21 +1,11 @@
-import argparse
 import json
 import logging
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
-from logs import server_log_config
 
-from server_storage import PORT, ADDR, check_request, err_presence_response
+from server_storage import PORT, ADDR, check_request, err_presence_response, \
+    size_of_recv, argv
 
 LOG = logging.getLogger('app.server')
-
-argv_parser = argparse.ArgumentParser(
-    prog='command_line_server',
-    description='аргументы командной строки сервера',
-    epilog='автор - poker4grig'
-)
-argv_parser.add_argument('-a', '--addr', nargs='?', default=ADDR, help='help')
-argv_parser.add_argument('-p', '--port', nargs='?', default=PORT, help='help')
-argv = argv_parser.parse_args()
 
 need_authorization = True
 
@@ -37,7 +27,7 @@ LOG.info(f'Запущен сервер с адресом: {ADDR}, порт {PORT
 
 while True:
     client_socket, addr = server_socket.accept()
-    req = json.loads(client_socket.recv(4096).decode('utf-8'))
+    req = json.loads(client_socket.recv(size_of_recv).decode('utf-8'))
     LOG.info(
         f'От клиента {client_socket.getpeername()} поступило сообщение: {req}')
     try:
