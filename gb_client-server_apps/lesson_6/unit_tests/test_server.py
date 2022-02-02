@@ -2,7 +2,7 @@ import os
 import sys
 import time
 import unittest
-from lesson_5.server_storage import action_presence, err_presence_response, \
+from lesson_6.server_storage import action_presence, err_presence_response, \
     contact_list, check_request
 
 sys.path.append(os.path.join(os.getcwd(), '..'))

@@ -2,6 +2,7 @@ import json
 import logging
 import time
 import argparse
+from logs.log_decorator import log_func
 
 LOG = logging.getLogger('app.server')
 
@@ -52,7 +53,7 @@ err_presence_response = json.dumps(
 
 
 ################################functions#####################################
-
+@log_func
 def check_request(request):
     checked_message = None
     if isinstance(request, dict) and "action" in request and "time" in request:
@@ -71,7 +72,7 @@ def check_request(request):
             checked_message = 'close'
     return checked_message
 
-
+@log_func
 def action_presence(request, contact_list):
     if "user" in request and "account_name" in request["user"]:
         if request["user"]["account_name"] in contact_list:
@@ -90,7 +91,7 @@ def action_presence(request, contact_list):
     send_message = presence_response.encode('utf-8')
     return send_message
 
-
+@log_func
 def action_authenticate(request):
     pass
     # if "user" in request:

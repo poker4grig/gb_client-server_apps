@@ -1,6 +1,7 @@
 import logging
 import time
 import argparse
+from logs.log_decorator import log_func
 
 ADDR = '127.0.0.1'
 PORT = 7777
@@ -28,6 +29,7 @@ auth_msg = {
 }
 
 
+@log_func
 def send_message(msg):
     LOG.debug(
         f'В функцию <<{send_message.__name__}>> поступил шаблон сообщения: {msg}.')

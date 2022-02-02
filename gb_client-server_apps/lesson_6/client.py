@@ -1,8 +1,7 @@
 import json
 import logging
 from socket import socket, AF_INET, SOCK_STREAM
-from client_storage import presence_msg, send_message, PORT, ADDR, argv, \
-    size_of_recv
+from client_storage import presence_msg, send_message, PORT, ADDR, size_of_recv
 import logs.client_log_config
 
 LOG = logging.getLogger("app.client")
@@ -24,6 +23,6 @@ while True:
         LOG.info(f'От сервера {client_socket.getpeername()} поступило сообщение: {request}')
         response = 'Some message!'
         client_socket.send(json.dumps(response).encode('utf-8'))
-        LOG.debug(f'На сервер отправлено сообщение: {response}')
+        LOG.info(f'На сервер отправлено сообщение: {response}')
 LOG.info(f'Закрытие соединения')
 client_socket.close()
