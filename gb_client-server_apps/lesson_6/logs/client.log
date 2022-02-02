@@ -1,0 +1,7 @@
+2022-02-02 22:18:14,184   DEBUG      client.py             Передача шаблона сообщения: {'action': 'presence'} для функции <<wrapper>>
+2022-02-02 22:18:14,185   DEBUG      client_storage.py     В функцию <<wrapper>> поступил шаблон сообщения: {'action': 'presence'}.
+2022-02-02 22:18:14,185   INFO       client_storage.py     Формирование сообщения для <<poker4grig>> завершилось успешно.
+2022-02-02 22:18:14,208   DEBUG      client.py             Была вызвана функция send_message c параметрами ({'action': 'presence', 'time': 1643829494.1859455, 'type': 'online', 'user': {'account_name': 'poker4grig', 'status': 'In contact'}},), {}. Вызов из модуля client_storage. Вызов из функции client_socket.send(json.dumps(send_message(presence_msg)).encode('utf-8')).Вызов из функции <module>
+2022-02-02 22:18:14,214   DEBUG      client.py             Функция <<wrapper>> отправила на сервер сообщение: {'action': 'presence', 'time': 1643829494.1859455, 'type': 'online', 'user': {'account_name': 'poker4grig', 'status': 'In contact'}}
+2022-02-02 22:18:14,245   INFO       client.py             От сервера ('127.0.0.1', 7777) поступило сообщение: {'response': 200, 'time': 1643829489.8760448, 'alert': 'OK'}
+2022-02-02 22:18:14,245   INFO       client.py             На сервер отправлено сообщение: Some message!

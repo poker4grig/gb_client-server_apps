@@ -1,9 +1,9 @@
 import json
 import logging
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
-
 from server_storage import PORT, ADDR, check_request, err_presence_response, \
     size_of_recv, argv
+import logs.server_log_config
 
 LOG = logging.getLogger('app.server')
 

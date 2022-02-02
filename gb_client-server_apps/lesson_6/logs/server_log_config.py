@@ -14,7 +14,7 @@ TIME_ROTATE_HANDLER = logging.handlers.TimedRotatingFileHandler(PATH, when='midn
 STREAM_HANDLER = logging.StreamHandler(sys.stderr)
 
 SERVER_FORMATTER = logging.Formatter(
-    f"%(asctime)-25s %(levelname)-10s %(filename)-26s %(message)s")
+    f"%(asctime)-25s %(levelname)-10s %(filename)-31s %(message)s")
 
 TIME_ROTATE_HANDLER.setFormatter(SERVER_FORMATTER)
 TIME_ROTATE_HANDLER.setLevel(logging.DEBUG)
