@@ -1,32 +1,9 @@
 import logging
 import time
-import argparse
 from logs.log_decorator import log_func
+from constants_client import CURRENT_USER
 
-ADDR = '127.0.0.1'
-PORT = 7777
-
-argv_parser = argparse.ArgumentParser(
-    prog='command_line_client',
-    description='аргументы командной строки клиента',
-    epilog='автор - poker4grig'
-)
-argv_parser.add_argument('-a', '--addr', nargs='?', default=ADDR,
-                         help='help')
-argv_parser.add_argument('-p', '--port', nargs='?', default=PORT)
-argv = argv_parser.parse_args()
 LOG = logging.getLogger("app.client")
-
-size_of_recv = 4096
-current_user = ('poker4grig', "1")
-
-presence_msg = {
-    "action": "presence"
-}
-
-auth_msg = {
-    "action": "authenticate"
-}
 
 
 @log_func
@@ -36,13 +13,13 @@ def send_message(msg):
     if msg["action"] == 'presence':
         msg["time"] = time.time()
         msg["type"] = "online"
-        msg.update({"user": {"account_name": current_user[0],
+        msg.update({"user": {"account_name": CURRENT_USER[0],
                              "status": "In contact"}})
     elif msg["action"] == 'authenticate':
         msg["time"] = time.time()
         msg["type"] = 'online'
-        msg.update({"user": {"account_name": current_user[0],
-                             "password": current_user[1]}})
+        msg.update({"user": {"account_name": CURRENT_USER[0],
+                             "password": CURRENT_USER[1]}})
     else:
         LOG.critical(f'Сообщение не сформировано. Неверный шаблон!')
         return None
