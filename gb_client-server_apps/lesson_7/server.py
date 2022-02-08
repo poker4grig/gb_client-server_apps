@@ -1,50 +1,98 @@
-import json
 import logging
-from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
-from functions_server import check_request, ERR_PRESENCE_RESPONSE
-from constants_server import ARGV, SIZE_OF_RECV, ADDR, PORT, \
-    NEED_AUTHORIZATION, COUNT_OF_LISTENING
+import select
+import time
+from functions_server import check_request, new_server_socket, get_message, \
+    send_message
+from constants_server import ADDR, PORT, SOCK_SET_TIMEOUT, COUNT_OF_LISTENING,\
+    NEED_AUTHORIZATION, ARGV_SERVER
 import logs.server_log_config
 
+# инициализируем логгер для сервера
 LOG = logging.getLogger('app.server')
 
-server_socket = socket(AF_INET, SOCK_STREAM)
-server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
-try:
-    # if 1024 > int(ARGV.port) > 65535:  # Включить для командной строки
-    if 1024 > PORT > 65535:  # Выключить
-        raise ValueError
-    # server_socket.bind((ARGV.addr, int(ARGV.port))) # Включить для командной строки
-    server_socket.bind((ADDR, PORT))  # Выключить
-except ValueError:
-    LOG.critical(
-        f'Порт № {PORT} не подходит для подключения. Значение порта должно быть между 1024 и 65535')
-server_socket.listen(COUNT_OF_LISTENING)
-
-LOG.info(f'Запущен сервер с адресом: {ADDR}, порт {PORT}')
-
-while True:
-    client_socket, addr = server_socket.accept()
-    req = json.loads(client_socket.recv(SIZE_OF_RECV).decode('utf-8'))
-    LOG.info(
-        f'От клиента {client_socket.getpeername()} поступило сообщение: {req}')
-    try:
-        if check_request(req) is None:
-            raise ValueError
+def server_recv_send_message(server_socket):
+    # список клиентов, очередь сообщений
+    clients = []
+    messages = []
+    while True:
+        try:
+            client, client_addr = server_socket.accept()
+        except OSError:
+            pass
         else:
-            if check_request(req) == 'close':
-                LOG.info(
-                    f"Клиент {client_socket.getpeername()} закрыл  соединение")
-                client_socket.close()
-            else:
-                client_socket.send(check_request(req))
-                LOG.info(
-                    f"Клиенту {client_socket.getpeername()} отправлено сообщение {req}")
-    except ValueError:
-        LOG.critical(
-            f'Функция {check_request.__name__} отметила сообщение от {client_socket.getpeername()} как некорректное!')
-        client_socket.send(ERR_PRESENCE_RESPONSE.encode('utf-8'))
-        LOG.info(f"Отправлено сообщение об ошибке: {ERR_PRESENCE_RESPONSE}")
+            LOG.info(f'Установлено соединение с ПК {client_addr}')
+            clients.append(client)
+            # Проверяем на наличие ждущих клиентов
+            r_from_cl = []
+            w_to_cl = []
+            cl_errors = []
+            try:
+                if clients:
+                    r_from_cl, w_to_cl, cl_errors = select.select(clients,
+                                                                  clients, [],
+                                                                  0)
+            except OSError:
+                pass
+            # принимаем сообщения и если там есть сообщения,
+            # кладём в словарь, если ошибка, исключаем клиента.
+            finally:
+                if r_from_cl:
+                    for client_msg_socket in r_from_cl:
+                        try:
+                            # Получаем сообщение от конкретного клиента
+                            req = get_message(client_msg_socket)
+                            LOG.info(
+                                f'От клиента {client_msg_socket.getpeername()} '
+                                f'поступило сообщение: {req}')
+                            # Проверяем сообщение на валидность
+                            check_request(req, client_msg_socket, messages, clients)
+                        except:
+                            LOG.info(
+                                f'Клиент {client_msg_socket.getpeername()} '
+                                f'отключился от сервера.')
+                            clients.remove(client_msg_socket)
 
-# need_authorization?
+                if w_to_cl and messages:
+                    # Если есть сообщения для отправки и ожидающие клиенты,
+                    # отправляем им сообщение.
+                    msg_to_cl = {
+                        "action": 'msg',
+                        "time": time.time(),
+                        "user": messages[0]['user'],
+                        "text": messages[0]['text']
+                    }
+
+                    del messages[0]
+                    for waiting_client in w_to_cl:
+                        try:
+                            send_message(waiting_client, msg_to_cl)
+                            LOG.info(
+                                f"Клиенту {waiting_client.getpeername()} "
+                                f"отправлено сообщение {msg_to_cl}")
+                        except:
+                            LOG.info(
+                                f'Клиент {waiting_client.getpeername()} '
+                                f'отключился от сервера.')
+                            clients.remove(waiting_client)
+
+
+def event_loop():
+    # получение серверного сокета из функции new_server_socket
+    # выключить для командной строки
+    server_socket = new_server_socket(ADDR, PORT, COUNT_OF_LISTENING,
+                                      SOCK_SET_TIMEOUT)
+    # включить для командной строки
+    # server_socket = new_server_socket(ARGV_SERVER.addr, ARGV_SERVER.port,
+    #                                   COUNT_OF_LISTENING, SOCK_SET_TIMEOUT)
+    #  поменять логгер для командной строки
+    LOG.info(f'Запущен сервер с адресом: {ADDR}, портом {PORT}')
+
+    server_recv_send_message(server_socket)
+
+# NEED_AUTHORIZATION?
+
+
+if __name__ == '__main__':
+    event_loop()
+

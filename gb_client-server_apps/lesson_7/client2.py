@@ -1,3 +1,4 @@
+import time
 import sys
 import logging
 from socket import socket, AF_INET, SOCK_STREAM
@@ -14,13 +15,14 @@ LOG.info(
         f'порт: {ARGV_CLIENT.port}, режим работы: {ARGV_CLIENT.mode}')
 
 
-def client_1(presence_msg=PRESENCE_MSG):
+def client_2(presence_msg=PRESENCE_MSG):
     # user = input("Введите свое имя... ")  # Выключить лоя командной строки
     user = ARGV_CLIENT.user  # Включить лоя командной строки
     print("Клиент с именем: ", user)
+    time.sleep(5)
     connect_socket = socket(AF_INET, SOCK_STREAM)
-    # проверка порта
 
+    # проверка порта
     if not 1023 < ARGV_CLIENT.port < 65536:
         LOG.critical(
             f'Попытка запуска клиента с неподходящим номером порта: {ARGV_CLIENT}. '
@@ -34,7 +36,6 @@ def client_1(presence_msg=PRESENCE_MSG):
         connect_socket.connect((ARGV_CLIENT.addr, ARGV_CLIENT.port)) # Включить для ком.строки
         # connect_socket.connect((ADDR, PORT))  # Выключить
 
-
     # presence_msg.update({"user": {"account_name": user,
     #                               "status": "In contact"}})
     # send_message(connect_socket, presence_msg)
@@ -44,6 +45,7 @@ def client_1(presence_msg=PRESENCE_MSG):
     # answer = check_presence_message(get_message(connect_socket))
     # LOG.info(f"Получен ответ от сервера: {answer}")
 
+    # ARGV_CLIENT.mode = 'listen' потом удалить
     if ARGV_CLIENT.mode == 'send':
         print('Режим работы - отправка сообщений.')
     else:
@@ -65,13 +67,12 @@ def client_1(presence_msg=PRESENCE_MSG):
             try:
                 message_from_server(get_message(connect_socket))
             except:
-                LOG.error(f'Соединение с сервером {ARGV_CLIENT.addr} было '
-                          f'потеряно.')
+                LOG.error(f'Соединение с сервером {ARGV_CLIENT.addr} было потеряно.')
                 sys.exit(1)
 
 
 if __name__ == '__main__':
-    client_1()
+    client_2()
 
     # while True:
     #     req = connect_socket.recv(SIZE_OF_RECV)
