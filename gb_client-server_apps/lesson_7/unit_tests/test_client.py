@@ -3,7 +3,7 @@ import sys
 import time
 import unittest
 
-from lesson_6.client_storage import current_user, presence_msg, send_message
+from ..functions_client import current_user, presence_msg, send_message
 
 sys.path.append(os.path.join(os.getcwd(), '..'))
 
