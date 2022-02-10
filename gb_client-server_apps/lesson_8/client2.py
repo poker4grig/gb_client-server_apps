@@ -33,19 +33,10 @@ def client_2(presence_msg=PRESENCE_MSG):
                         f'допустимые режимы: listen , send')
         sys.exit(1)
     else:
-        connect_socket.connect((ARGV_CLIENT.addr, ARGV_CLIENT.port)) # Включить для ком.строки
-        # connect_socket.connect((ADDR, PORT))  # Выключить
+        # connect_socket.connect((ARGV_CLIENT.addr, ARGV_CLIENT.port))  # Включить для ком.строки
+        connect_socket.connect((ADDR, PORT))  # Выключить для ком.строки
 
-    # presence_msg.update({"user": {"account_name": user,
-    #                               "status": "In contact"}})
-    # send_message(connect_socket, presence_msg)
-    # LOG.debug(f'Функция <<{send_message.__name__}>> отправила на сервер '
-    #           f'сообщение: {presence_msg}')
-
-    # answer = check_presence_message(get_message(connect_socket))
-    # LOG.info(f"Получен ответ от сервера: {answer}")
-
-    # ARGV_CLIENT.mode = 'listen' потом удалить
+    ARGV_CLIENT.mode = 'listen'  # потом удалить
     if ARGV_CLIENT.mode == 'send':
         print('Режим работы - отправка сообщений.')
     else:
@@ -73,16 +64,3 @@ def client_2(presence_msg=PRESENCE_MSG):
 
 if __name__ == '__main__':
     client_2()
-
-    # while True:
-    #     req = connect_socket.recv(SIZE_OF_RECV)
-    #     if not req:
-    #         break
-    #     else:
-    #         request = json.loads(req.decode('utf-8'))
-    #         LOG.info(f'От сервера {connect_socket.getpeername()} поступило сообщение: {request}')
-    #         response = 'Some message!'
-    #         connect_socket.send(json.dumps(response).encode('utf-8'))
-    #         LOG.info(f'На сервер отправлено сообщение: {response}')
-    # LOG.info(f'Закрытие соединения')
-    # connect_socket.close()

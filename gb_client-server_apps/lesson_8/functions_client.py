@@ -2,7 +2,6 @@ import logging
 import sys
 import time
 from logs.log_decorator import log_func
-from constants_client import CURRENT_USER
 from constants_server import RESPONSE_CODE_ALERT
 
 LOG = logging.getLogger("app.client")

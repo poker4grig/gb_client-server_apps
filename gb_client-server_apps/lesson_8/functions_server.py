@@ -115,7 +115,6 @@ def action_presence(request, contact_list, err_msg=ERR_PRESENCE_RESPONSE,
     return pres_msg
 
 
-
 # @log_func
 def action_authenticate(request):
     pass
