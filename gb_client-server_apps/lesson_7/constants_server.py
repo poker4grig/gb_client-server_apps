@@ -6,7 +6,7 @@ PORT = 7777
 SIZE_OF_RECV = 4096
 NEED_AUTHORIZATION = True
 COUNT_OF_LISTENING = 5
-SOCK_SET_TIMEOUT = 0.5
+SOCK_SET_TIMEOUT = 0.2
 
 argv_parser = argparse.ArgumentParser(
     prog='command_line_server',
@@ -53,5 +53,3 @@ PRESENCE_RESPONSE = (
 ERR_PRESENCE_RESPONSE = (
     {"response": 400, "time": time.time(),
      "alert": RESPONSE_CODE_ALERT[400]})
-
-

@@ -86,6 +86,3 @@ if __name__ == '__main__':
     #         LOG.info(f'На сервер отправлено сообщение: {response}')
     # LOG.info(f'Закрытие соединения')
     # connect_socket.close()
-
-
-
