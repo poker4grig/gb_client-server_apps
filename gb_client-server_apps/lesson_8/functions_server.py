@@ -3,7 +3,7 @@ import logging
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 
 from constants_server import CONTACT_LIST,  SIZE_OF_RECV, PRESENCE_RESPONSE, \
-    ERR_PRESENCE_RESPONSE, ARGV_SERVER
+    ERR_PRESENCE_RESPONSE, ENCODING
 from logs.log_decorator import log_func
 
 LOG = logging.getLogger('app.server')
@@ -33,11 +33,11 @@ def new_server_socket(address, port, listen, timeout):
 
 
 # @log_func
-def get_message(client, size_of_recv=SIZE_OF_RECV):
+def get_message(client):
     try:
         encoded_request = client.recv(SIZE_OF_RECV)
         if isinstance(encoded_request, bytes):
-            json_request = encoded_request.decode("utf-8")
+            json_request = encoded_request.decode(ENCODING)
             request = json.loads(json_request)
             if isinstance(request, dict):
                 return request
@@ -52,7 +52,7 @@ def send_message(client, message):
     try:
         if isinstance(message, dict):
             json_message = json.dumps(message)
-            encoded_message = json_message.encode("utf-8")
+            encoded_message = json_message.encode(ENCODING)
             client.send(encoded_message)
         else:
             raise ValueError

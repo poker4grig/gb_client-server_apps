@@ -8,6 +8,25 @@ LOG = logging.getLogger("app.client")
 
 
 # @log_func
+def create_presence_message(account_name):
+    """
+    Функция генерирует запрос о присутствии клиента
+    :param account_name:
+    :return:
+    """
+    presence_msg = {
+        "action": "presence",
+        "time": time.time(),
+        "type": "online",
+        "user": {"account_name": account_name,
+                  "status": "In contact"}
+    }
+    LOG.debug(
+        f'Сформировано {presence_msg} сообщение для пользователя {account_name}')
+    return presence_msg
+
+
+# @log_func
 def check_presence_message(answer, code=RESPONSE_CODE_ALERT):
     if answer['response'] == 200:
         if answer['response'] == 200:

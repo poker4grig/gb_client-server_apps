@@ -1,21 +1,45 @@
-import sys
+import argparse
 import logging
+import sys
 from socket import socket, AF_INET, SOCK_STREAM
-from functions_client import message_from_server, create_message
-from functions_server import get_message, send_message
-from constants_client import PRESENCE_MSG, PORT, ADDR, ARGV_CLIENT
+
 import logs.client_log_config
+from constants_client import PORT, ADDR
+from functions_client import message_from_server, create_presence_message, \
+    create_message
+from functions_server import get_message, send_message
 
 # инициализируем логгер для сервера
 LOG = logging.getLogger("app.client")
+
+
+def client_argv():
+    argv_parser = argparse.ArgumentParser(
+        prog='command_line_client',
+        description='аргументы командной строки клиента',
+        epilog='автор - poker4grig'
+    )
+    argv_parser.add_argument('-a', '--addr', nargs='?', default=ADDR,
+                             help='help')
+    argv_parser.add_argument('-p', '--port', nargs='?', default=PORT, type=int,
+                             help='help')
+    argv_parser.add_argument('-m', '--mode', nargs='?', default='send',
+                             help='help')
+    argv_parser.add_argument('-u', '--user', nargs='?', default='',
+                             help='help')
+    argv_client = argv_parser.parse_args()
+    return argv_client
+
+
+ARGV_CLIENT = client_argv()
 LOG.info(
-        f'Запущен клиент с парамертами: адрес сервера: {ARGV_CLIENT.addr}, '
-        f'порт: {ARGV_CLIENT.port}, режим работы: {ARGV_CLIENT.mode}')
+    f'Запущен клиент с парамертами: адрес сервера: {ARGV_CLIENT.addr}, '
+    f'порт: {ARGV_CLIENT.port}, режим работы: {ARGV_CLIENT.mode}')
 
 
-def client_1(presence_msg=PRESENCE_MSG):
-    # user = input("Введите свое имя... ")  # Выключить лоя командной строки
-    user = ARGV_CLIENT.user                 # Включить лоя командной строки
+def client_1():
+    # user = input("Введите свое имя... ")  # Выключить для командной строки
+    user = ARGV_CLIENT.user  # Включить для командной строки
     print("Клиент с именем: ", user)
     connect_socket = socket(AF_INET, SOCK_STREAM)
 
@@ -31,7 +55,11 @@ def client_1(presence_msg=PRESENCE_MSG):
         sys.exit(1)
     else:
         # connect_socket.connect((ARGV_CLIENT.addr, ARGV_CLIENT.port))  # Включить для ком.строки
-        connect_socket.connect((ADDR, PORT))                            # Выключить для ком.строки
+        connect_socket.connect((ADDR, PORT))  # Выключить для ком.строки
+        LOG.info("Мы подключились к серверу")
+        presence_msg = create_presence_message(user)
+        send_message(connect_socket, presence_msg)
+        LOG.info("На сервер отправлено приветственное сообщение")
 
     if ARGV_CLIENT.mode == 'send':
         print('Режим работы - отправка сообщений.')
@@ -61,6 +89,3 @@ def client_1(presence_msg=PRESENCE_MSG):
 
 if __name__ == '__main__':
     client_1()
-
-# presence_msg.update({"user": {"account_name": user,
-#                               "status": "In contact"}})

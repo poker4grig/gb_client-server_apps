@@ -1,10 +1,10 @@
 import logging
+import argparse
 from select import select
 import time
 from functions_server import check_request, new_server_socket, get_message, \
     send_message
-from constants_server import ADDR, PORT, SOCK_SET_TIMEOUT, COUNT_OF_LISTENING,\
-    NEED_AUTHORIZATION, ARGV_SERVER
+from constants_server import ADDR, PORT, SOCK_SET_TIMEOUT, COUNT_OF_LISTENING
 import logs.server_log_config
 
 # инициализируем логгер для сервера
@@ -13,9 +13,29 @@ LOG = logging.getLogger('app.server')
 to_monitor = []
 
 
+def server_argv():
+    argv_parser = argparse.ArgumentParser(
+        prog='command_line_server',
+        description='аргументы командной строки сервера',
+        epilog='автор - poker4grig'
+    )
+    argv_parser.add_argument('-a', '--addr', nargs='?', default='', help='help')
+    argv_parser.add_argument('-p', '--port', nargs='?', default=PORT, type=int,
+                             help='help')
+    argv_parser.add_argument('-m', '--mode', nargs='?', default='listen',
+                             help='help')
+    argv_parser.add_argument('-u', '--user', nargs='?', default='', help='help')
+    argv_server = argv_parser.parse_args()
+    return argv_server
+
+
+ARGV_SERVER = server_argv()
+
+
 def accept_connection(server_sock):
     try:
         client_socket, client_addr = server_sock.accept()
+        LOG.info(f"Успешное подключение сокета с адресом - {client_addr}")
         to_monitor.append(client_socket)
     except OSError:
         pass
@@ -57,6 +77,7 @@ def server_recv_send_message():
                         f'Клиент {client_msg_socket.getpeername()} '
                         f'отключился от сервера.')
                     to_monitor.remove(client_msg_socket)
+                    client_msg_socket.close()
 
         if w_to_cl and messages:
             # Если есть сообщения для отправки и ожидающие клиенты,
@@ -83,9 +104,6 @@ def server_recv_send_message():
                             f'Клиент {waiting_client.getpeername()} '
                             f'отключился от сервера.')
                         to_monitor.remove(waiting_client)
-
-
-# NEED_AUTHORIZATION?
 
 
 if __name__ == '__main__':
