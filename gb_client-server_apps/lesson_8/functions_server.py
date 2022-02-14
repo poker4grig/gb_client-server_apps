@@ -1,9 +1,8 @@
 import json
 import logging
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
-
-from constants_server import CONTACT_LIST,  SIZE_OF_RECV, PRESENCE_RESPONSE, \
-    ERR_PRESENCE_RESPONSE, ENCODING
+from constants_server import SIZE_OF_RECV, PRESENCE_RESPONSE, ENCODING, \
+    ERR_PRESENCE_RESPONSE
 from logs.log_decorator import log_func
 
 LOG = logging.getLogger('app.server')
@@ -18,17 +17,9 @@ def new_server_socket(address, port, listen, timeout):
     """
     server_socket = socket(AF_INET, SOCK_STREAM)
     server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    try:
-        if 1024 > port > 65535:
-            raise ValueError
-        server_socket.bind((address, port))
-    except ValueError:
-        LOG.critical(
-            f'Порт № {port} не подходит для подключения. Значение порта должно'
-            f' быть между 1024 и 65535')
+    server_socket.bind((address, port))
     server_socket.settimeout(timeout)
     server_socket.listen(listen)
-
     return server_socket
 
 
@@ -61,83 +52,63 @@ def send_message(client, message):
 
 
 # @log_func
-def check_request(request, client_socket, messages, clients,
-                  contact_list=CONTACT_LIST, err_msg=ERR_PRESENCE_RESPONSE,
-                  pres_msg=PRESENCE_RESPONSE):
-    try:
-        if "action" in request and "time" in request:
-            # Получили правильный запрос
-            if request["action"] == 'presence':
-                message = action_presence(request, CONTACT_LIST)
-                send_message(client_socket, message)
-            elif request["action"] == 'msg':
-                messages.append(request)
-            elif request["action"] == 'authenticate':
-                pass
-            elif request["action"] == 'join':
-                pass
-            elif request["action"] == 'leave':
-                pass
-            elif request["action"] == 'quit':
-                LOG.info(
-                    f"Клиент {client_socket.getpeername()}"
-                    f" закрыл соединение")
-                client_socket.close()
-                clients.remove(client_socket)
+def process_client_message(message, messages_list, client, clients, names):
+    """Обработчик сообщений от клиентов, принимает словарь - сообщение от
+    клиента, проверяет корректность, отправляет словарь-ответ в случае
+    необходимости.
+    """
+    LOG.debug(f'Разбор сообщения от клиента : {message}')
+    # Если это сообщение о присутствии, принимаем и отвечаем
+    if "action" in message and message["action"] == "presence" and \
+            "time" in message and "user" in message:
+        # Если такой пользователь ещё не зарегистрирован,
+        # регистрируем, иначе отправляем ответ и завершаем соединение.
+        if message["user"]["account_name"] not in names:
+            names[message["user"]["account_name"]] = client
+            send_message(client, PRESENCE_RESPONSE)
         else:
-            raise ValueError
-    except ValueError:
-        LOG.critical(
-            f'Функция {check_request.__name__} отметила сообщение от '
-            f'{client_socket.getpeername()} как некорректное!')
-        send_message(client_socket, err_msg)
-        LOG.info(
-            f"Отправлено сообщение об ошибке: {err_msg}")
-
-
-# @log_func
-def action_presence(request, contact_list, err_msg=ERR_PRESENCE_RESPONSE,
-                    pres_msg=PRESENCE_RESPONSE):
-    if "user" in request and "account_name" in request["user"]:
-        if request["user"]["account_name"] in contact_list:
-            contact_list[request["user"]["account_name"][1]] = "online"
-            LOG.info(
-                f"Пользователь {request['user']['account_name']} имеет статус "
-                f"<онлайн>")
-        else:
-            LOG.info(
-                f"Функция {action_presence.__name__} добавила пользователя "
-                f"{request['user']['account_name']} в контактный лист")
-            contact_list.update({request["user"]["account_name"]: ('None',
-                                                                   'online')})
+            response = ERR_PRESENCE_RESPONSE
+            response["error"] = 'Имя пользователя уже занято.'
+            send_message(client, response)
+            clients.remove(client)
+            client.close()
+        return
+    # Если это сообщение, то добавляем его в очередь сообщений.
+    # Ответ не требуется.
+    elif "action" in message and message["action"] == "msg" and \
+            "to" in message and "time" in message \
+            and "from" in message and "text" in message:
+        messages_list.append(message)
+        return
+    # Если клиент выходит
+    elif "action" in message and message["action"] == "exit" and \
+            "account_name" in message:
+        clients.remove(names[message["account_name"]])
+        names[message["account_name"]].close()
+        del names[message["account_name"]]
+        return
+    # Иначе отдаём Bad request
     else:
-        return err_msg
-    return pres_msg
+        response = ERR_PRESENCE_RESPONSE
+        response["error"] = 'Запрос некорректен.'
+        send_message(client, response)
+        return
 
 
 # @log_func
-def action_authenticate(request):
-    pass
-    # if "user" in request:
-    #     if request['user']['account_name'] in contact_list:
-    #         if request['user']['password'] == contact_list[
-    #             request['user']['account_name']]:
-    #             auth_response = json.dumps(
-    #                 {"response": 200, "time": time.time(),
-    #                  "alert": response_code_alert[200]})    #
-    #             client_socket.send(auth_response.encode('utf-8'))
-    #         else:
-    #             auth_response = json.dumps(
-    #                 {"response": 402, "time": time.time(),
-    #                  "alert": response_code_alert[402]})
-    #             client_socket.send(auth_response.encode('utf-8'))
-    # else:
-    #     auth_response = json.dumps(
-    #         {"response": 401, "time": time.time(),
-    #          "alert": response_code_alert[401]})
-    #     client_socket.send(auth_response.encode('utf-8'))
-    # return response
+def process_message(message, names, listen_socks):
+    """ Функция адресной отправки сообщения определённому клиенту. Принимает
+    словарь сообщение, список зарегистрированных пользователей и слушающие
+    сокеты. Ничего не возвращает.
+    """
+    if message["to"] in names and names[message["to"]] in listen_socks:
+        send_message(names[message["to"]], message)
+        LOG.info(f'Отправлено сообщение пользователю {message["to"]} '
+                    f'от пользователя {message["from"]}.')
+    elif message["to"] in names and names[message["to"]] not in listen_socks:
+        raise ConnectionError
+    else:
+        LOG.error(
+            f'Пользователь {message["to"]} не зарегистрирован на сервере, '
+            f'отправка сообщения невозможна.')
 
-
-def action_message():
-    pass

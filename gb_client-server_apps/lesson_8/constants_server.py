@@ -5,7 +5,7 @@ PORT = 7777
 SIZE_OF_RECV = 4096
 NEED_AUTHORIZATION = True
 COUNT_OF_LISTENING = 5
-SOCK_SET_TIMEOUT = 0.2
+SOCK_SET_TIMEOUT = 0.5
 ENCODING = "utf-8"
 
 # contact_list - словарь с данными о пользователях - ключ - имя пользователя,
@@ -33,10 +33,9 @@ PROBE = {
     "time": time.time()
 }
 
-PRESENCE_RESPONSE = (
-    {"response": 200, "time": time.time(),
-     "alert": RESPONSE_CODE_ALERT[200]})
+PRESENCE_RESPONSE = {"response": 200}
 
-ERR_PRESENCE_RESPONSE = (
-    {"response": 400, "time": time.time(),
-     "alert": RESPONSE_CODE_ALERT[400]})
+ERR_PRESENCE_RESPONSE = {
+    "response": 400,
+    "error": None
+}
