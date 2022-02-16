@@ -5,7 +5,7 @@ import json
 from errors import ServerError, ReqFieldMissingError, IncorrectDataRecivedError
 from functions_server import get_message, send_message
 from constants_server import RESPONSE_CODE_ALERT
-from lesson_8.logs.log_decorator import log_func
+from lesson_2_1.logs.log_decorator import log_func
 
 LOG = logging.getLogger("app.client")
 
