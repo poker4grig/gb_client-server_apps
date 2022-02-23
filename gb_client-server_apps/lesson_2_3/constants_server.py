@@ -8,6 +8,7 @@ COUNT_OF_LISTENING = 5
 SOCK_SET_TIMEOUT = 0.5
 ENCODING = "utf-8"
 TIMEOUT = 0.5
+SERVER_DATABASE = 'sqlite:///server_base.db3'
 
 # contact_list - словарь с данными о пользователях - ключ - имя пользователя,
 # значение - кортеж ("пароль", "статус")
