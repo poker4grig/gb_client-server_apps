@@ -193,7 +193,7 @@ def main():
     print_help()
 
     while True:
-        command = input('Введите комманду: ')
+        command = input('Введите команду: ')
         if command == 'help':
             print_help()
         elif command == 'exit':

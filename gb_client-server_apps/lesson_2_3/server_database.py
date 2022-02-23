@@ -12,7 +12,7 @@ class ServerStorage:
     class AllUsers:
         def __init__(self, username):
             self.id = None
-            self.username = username
+            self.name = username
             self.last_login = datetime.datetime.now()
 
     class ActiveUser:
@@ -39,7 +39,7 @@ class ServerStorage:
         # Создание самих таблиц для БД
         users_table = Table('Users', self.metadata,
                             Column('id', Integer, primary_key=True),
-                            Column('username', String, unique=True),
+                            Column('name', String, unique=True),
                             Column('last_login', DateTime)
                             )
 
@@ -81,6 +81,7 @@ class ServerStorage:
         print(username, ip_address, port)
         # Проверка, есть ли пользователь в таблице пользователей БД
         result = self.session.query(self.AllUsers).filter_by(name=username)
+        print("это переменная запроса result - ", result)
         print("это переменная запроса result - ", type(result))
         if result.count():  # если есть, обновляем время последнего входа
             user = result.first()
@@ -108,7 +109,7 @@ class ServerStorage:
     def user_logout(self, username):
         # получаем из БД пользователя, который отключается
         user = self.session.query(self.AllUsers).filter_by(
-            username=username).first()
+            name=username).first()
         # удаляем его из таблицы ActiveUsers
         self.session.query(self.ActiveUser).filter_by(user=user.id).delete()
         self.session.commit()
@@ -116,10 +117,9 @@ class ServerStorage:
     # функция, возвращающая список пользователей и время их входа
     def users_list(self):
         query = self.session.query(
-            self.AllUsers.username,
-            self.LoginHistory.date,
-            self.LoginHistory.ip,
-            self.LoginHistory.port).join(self.AllUsers)
+            self.AllUsers.name,
+            self.AllUsers.last_login
+        )
 
         return query.all()
 
@@ -138,14 +138,14 @@ class ServerStorage:
     def login_history(self, username=None):
         # запрос истории ввода
         query = self.session.query(
-            self.AllUsers.username,
+            self.AllUsers.name,
             self.LoginHistory.date_time,
             self.LoginHistory.ip,
             self.LoginHistory.port
         ).join(self.AllUsers)
 
         if username:
-            query = query.filter(self.AllUsers.username == username)
+            query = query.filter(self.AllUsers.name == username)
         return query.all()
 
 
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     test_db = ServerStorage()
     # подключаем пользователей
     test_db.user_login('client_1', '127.0.0.1', 7777)
-    test_db.user_login('client_2', '127.0.0.1', 7777)
+    test_db.user_login('client_2', '127.0.0.2', 8888)
     # выводим список активных пользователей
     print(test_db.active_users_list())
     # отключаем пользователя
@@ -162,4 +162,4 @@ if __name__ == '__main__':
     print(test_db.active_users_list())
     # запрос истории входов по пользователю
     test_db.login_history('client_1')
-    # еще раз выводим список активных пользователей
+    print(test_db.users_list())
