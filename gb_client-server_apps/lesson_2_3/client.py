@@ -160,7 +160,7 @@ class Client(metaclass=ClientVerifier):
             sys.exit(1)
         except ConnectionRefusedError:
             LOG.critical(
-                f'Не удалось подключиться к серверу {self.address}:{self.port}, '
+                f'Не удалось подключиться к серверу {self.addr}:{self.port}, '
                 f'конечный компьютер отверг запрос на подключение.')
             sys.exit(1)
         else:

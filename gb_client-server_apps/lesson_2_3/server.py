@@ -1,6 +1,7 @@
 import argparse
 import logging
 from select import select
+import threading
 import socket
 import logs.server_log_config
 from constants_server import PORT, TIMEOUT, PRESENCE_RESPONSE, \
@@ -9,6 +10,7 @@ from descriptors import Port, Host
 from functions import get_message, send_message
 from logs.log_decorator import log_func
 from metaclasses import ServerVerifier
+from server_database import ServerStorage
 
 # инициализируем логгер для сервера
 LOG = logging.getLogger('app.server')
@@ -29,22 +31,24 @@ def server_argv():
     return argv_server
 
 
-class Server(metaclass=ServerVerifier):
+class Server(threading.Thread, metaclass=ServerVerifier):
     port = Port()
     host = Host()
 
-    def __init__(self, argv_server):
+    def __init__(self, addr, port, database):
 
         self.server_socket = None
-        self.host = argv_server.addr
-        self.port = argv_server.port
-
+        self.host = addr
+        self.port = port
+        # база данных сервера
+        self.database = database
         # self.clients - список подключенных клиентов
         self.clients = []
         # self.messages - очередь сообщений
         self.messages = []
         # self.names - словарь с именами пользователей и их сокетами
         self.names = {}
+        super().__init__()
 
     def new_server_socket(self):
         """Метод возвращает серверный сокет для IPv4 и TCP протоколов, с
@@ -64,7 +68,7 @@ class Server(metaclass=ServerVerifier):
         self.server_socket.settimeout(TIMEOUT)
         self.server_socket.listen()
 
-    def main_loop(self):
+    def run(self):
         # Инициализация сокета
         self.new_server_socket()
 
@@ -139,6 +143,8 @@ class Server(metaclass=ServerVerifier):
             # регистрируем, иначе отправляем ответ и завершаем соединение.
             if message["user"]["account_name"] not in self.names.keys():
                 self.names[message["user"]["account_name"]] = client
+                client_ip, client_port = client.getpeername()
+                self.database.user_login(message['user']['account_name'], client_ip, client_port)
                 send_message(client, PRESENCE_RESPONSE)
             else:
                 response = ERR_PRESENCE_RESPONSE
@@ -157,9 +163,10 @@ class Server(metaclass=ServerVerifier):
         # Если клиент выходит
         elif "action" in message and message["action"] == "exit" and \
                 "account_name" in message:
-            self.clients.remove(self.names["account_name"])
-            self.names["account_name"].close()
-            del self.names["account_name"]
+            self.database.user_logout(message['account_name'])
+            self.clients.remove(self.names[message["account_name"]])
+            self.names[message["account_name"]].close()
+            del self.names[message["account_name"]]
             return
         # Иначе отдаём Bad request
         else:
@@ -168,10 +175,50 @@ class Server(metaclass=ServerVerifier):
             send_message(client, response)
             return
 
+    def user_commands(self):
+        print_help()
+        while True:
+            command = input('Введите команду: ')
+            if command == 'help':
+                print_help()
+            elif command == 'exit':
+                break
+            elif command == 'users':
+                for user in sorted(self.database.users_list()):
+                    print(f'Пользователь {user[0]}, последний вход: {user[1]}')
+            elif command == 'connected':
+                for user in sorted(self.database.active_users_list()):
+                    print(
+                        f'Пользователь {user[0]}, подключен: {user[1]}:{user[2]}, время установки соединения: {user[3]}')
+            elif command == 'loghist':
+                name = input(
+                    'Введите имя пользователя для просмотра истории. Для вывода всей истории, просто нажмите Enter: ')
+                for user in sorted(self.database.login_history(name)):
+                    print(
+                        f'Пользователь: {user[0]} время входа: {user[1]}. Вход с: {user[2]}:{user[3]}')
+            else:
+                print('Команда не распознана.')
+
+
+def print_help():
+    print('Поддерживаемые комманды:')
+    print('users - список известных пользователей')
+    print('connected - список подключенных пользователей')
+    print('loghist - история входов пользователя')
+    print('exit - завершение работы сервера.')
+    print('help - вывод справки по поддерживаемым командам')
+
 
 def main():
-    server = Server(server_argv())
-    server.main_loop()
+    parser = server_argv()
+    addr = parser.addr
+    port = parser.port
+    database = ServerStorage()
+    server = Server(addr, port, database)
+    server.daemon = True
+
+    server.run()
+    server.user_commands()
 
 
 if __name__ == '__main__':
