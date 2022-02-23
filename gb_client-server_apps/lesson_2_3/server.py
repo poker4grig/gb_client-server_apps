@@ -35,11 +35,11 @@ class Server(threading.Thread, metaclass=ServerVerifier):
     port = Port()
     host = Host()
 
-    def __init__(self, argv_server, database):
+    def __init__(self, addr, port, database):
 
         self.server_socket = None
-        self.host = argv_server.addr
-        self.port = argv_server.port
+        self.host = addr
+        self.port = port
         # база данных сервера
         self.database = database
         # self.clients - список подключенных клиентов
@@ -68,7 +68,7 @@ class Server(threading.Thread, metaclass=ServerVerifier):
         self.server_socket.settimeout(TIMEOUT)
         self.server_socket.listen()
 
-    def main_loop(self):
+    def run(self):
         # Инициализация сокета
         self.new_server_socket()
 
@@ -175,6 +175,30 @@ class Server(threading.Thread, metaclass=ServerVerifier):
             send_message(client, response)
             return
 
+    def user_commands(self):
+        print_help()
+        while True:
+            command = input('Введите команду: ')
+            if command == 'help':
+                print_help()
+            elif command == 'exit':
+                break
+            elif command == 'users':
+                for user in sorted(self.database.users_list()):
+                    print(f'Пользователь {user[0]}, последний вход: {user[1]}')
+            elif command == 'connected':
+                for user in sorted(self.database.active_users_list()):
+                    print(
+                        f'Пользователь {user[0]}, подключен: {user[1]}:{user[2]}, время установки соединения: {user[3]}')
+            elif command == 'loghist':
+                name = input(
+                    'Введите имя пользователя для просмотра истории. Для вывода всей истории, просто нажмите Enter: ')
+                for user in sorted(self.database.login_history(name)):
+                    print(
+                        f'Пользователь: {user[0]} время входа: {user[1]}. Вход с: {user[2]}:{user[3]}')
+            else:
+                print('Команда не распознана.')
+
 
 def print_help():
     print('Поддерживаемые комманды:')
@@ -186,33 +210,15 @@ def print_help():
 
 
 def main():
+    parser = server_argv()
+    addr = parser.addr
+    port = parser.port
     database = ServerStorage()
-    server = Server(server_argv(), database)
+    server = Server(addr, port, database)
     server.daemon = True
-    server.start()
-    print_help()
 
-    while True:
-        command = input('Введите команду: ')
-        if command == 'help':
-            print_help()
-        elif command == 'exit':
-            break
-        elif command == 'users':
-            for user in sorted(database.users_list()):
-                print(f'Пользователь {user[0]}, последний вход: {user[1]}')
-        elif command == 'connected':
-            for user in sorted(database.active_users_list()):
-                print(
-                    f'Пользователь {user[0]}, подключен: {user[1]}:{user[2]}, время установки соединения: {user[3]}')
-        elif command == 'loghist':
-            name = input(
-                'Введите имя пользователя для просмотра истории. Для вывода всей истории, просто нажмите Enter: ')
-            for user in sorted(database.login_history(name)):
-                print(
-                    f'Пользователь: {user[0]} время входа: {user[1]}. Вход с: {user[2]}:{user[3]}')
-        else:
-            print('Команда не распознана.')
+    server.run()
+    server.user_commands()
 
 
 if __name__ == '__main__':
