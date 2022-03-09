@@ -115,7 +115,7 @@ class HistoryWindow(QDialog):  #  Класс окна с историей пол
 class ConfigWindow(QDialog):
     def __init__(self):
         super().__init__()
-        self.iniUI()
+        self.initUI()
 
     def initUI(self):
         self.setFixedSize(365, 260)
@@ -197,21 +197,20 @@ class ConfigWindow(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainWindow()
-    ex.statusBar().showMessage('Test Statusbar Message')
-    test_list = QStandardItemModel(ex)
+    window = MainWindow()
+    window.statusBar().showMessage('Test Statusbar Message')
+    test_list = QStandardItemModel(window)
     test_list.setHorizontalHeaderLabels(['Имя Клиента', 'IP Адрес', 'Порт',
                                          'Время подключения'])
     test_list.appendRow([QStandardItem('1'), QStandardItem('2'),
                          QStandardItem('3')])
     test_list.appendRow([QStandardItem('4'), QStandardItem('5'),
                          QStandardItem('6')])
-    ex.active_clients_table.setModel(test_list)
-    ex.active_clients_table.resizeColumnsToContents()
-    print('Hello')
-    app.exec_()
-    print('END')
-
+    window.active_clients_table.setModel(test_list)
+    window.active_clients_table.resizeColumnsToContents()
+    history_window = HistoryWindow()
+    config_window = ConfigWindow()
+    sys.exit(app.exec_())
 
 
 
