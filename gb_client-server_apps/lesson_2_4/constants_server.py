@@ -25,3 +25,7 @@ ERR_PRESENCE_RESPONSE = {
     "response": 400,
     "error": None
 }
+
+RESPONSE_202 = {"response": 202,
+                'data_list': None
+                }
