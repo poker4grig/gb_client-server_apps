@@ -33,7 +33,6 @@ class ServerVerifier(type):
 class ClientVerifier(type):
     def __init__(self, clsname, bases, clsdict):
         methods = list()
-        attributes = list()
         for func in clsdict:
             try:
                 instructions = dis.get_instructions(clsdict[func])
@@ -44,16 +43,11 @@ class ClientVerifier(type):
                     if inst.opname == 'LOAD_GLOBAL':
                         if inst.argval not in methods:
                             methods.append(inst.argval)
-                    elif inst.opname == 'LOAD_ATTR':
-                        if inst.argval not in attributes:
-                            attributes.append(inst.argval)
+
         # print(f'Методы класса Client: {methods}')
         # print(f'Атрибуты класса Client: {attributes}')
         if any(i for i in ('accept', 'listen') if i in methods):
             raise TypeError(
                 'В классе обнаружено использование запрещённого метода')
         super().__init__(clsname, bases, clsdict)
-        if not ('AF_INET' in attributes and 'SOCK_STREAM' in attributes):
-            raise TypeError(
-                'Отсутствуют атрибуты AF_INET и SOCK_STREAM при создании '
-                'сокета ')
+
