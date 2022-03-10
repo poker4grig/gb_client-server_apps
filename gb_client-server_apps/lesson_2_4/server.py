@@ -327,7 +327,7 @@ def main():
     timer.start(1000)
 
     # Связываем кнопки и процедуры
-    main_window.refresh_btn.triggered.connect(list_update)
+    main_window.refresh_button.triggered.connect(list_update)
     main_window.show_history_button.triggered.connect(show_statistics)
     main_window.config_btn.triggered.connect(server_config)
 

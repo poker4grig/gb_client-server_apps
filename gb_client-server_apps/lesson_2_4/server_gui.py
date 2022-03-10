@@ -27,24 +27,24 @@ def gui_create_model(database):
 
 
 def create_stat_model(database):  # Заполнение историей сообщений
-    hist_list = database.massage_history()  # Получение записей из БД
-    list_ = QStandardItemModel()  # создаем главную форму, в которую вставляем
+    hist_list = database.message_history()  # Получение записей из БД
+    list = QStandardItemModel()  # создаем главную форму, в которую вставляем
     # содержимое из таблицы истории сообщений
-    list_ = QStandardItemModel()
-    list_.setHorizontalHeaderLabels(['Имя клиента', 'Последний раз входил',
+    list = QStandardItemModel()
+    list.setHorizontalHeaderLabels(['Имя клиента', 'Последний раз входил',
                                 'Сообщение отправлено', 'Сообщений получено'])
     for row in hist_list:
-        user, last_seen, sent, recved = row
+        user, last_seen, sent, recvd = row
         user = QStandardItem(user)
         user.setEditable(False)
         last_seen = QStandardItem(str(last_seen.replace(microsecond=0)))
         last_seen.setEditable(False)
         sent = QStandardItem(str(sent))
         sent.setEditable(False)
-        recved =QStandardItem(str(recved))
-        recved.setEditable(False)
-        list_.appendRow([user, last_seen, sent, recved])
-    return list_
+        recvd = QStandardItem(str(recvd))
+        recvd.setEditable(False)
+        list.appendRow([user, last_seen, sent, recvd])
+    return list
 
 
 class MainWindow(QMainWindow):
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         exitAction.setShortcut('Ctrl+Q')
         exitAction.triggered.connect(qApp.quit)
         # Кнопка обновления списка клиентов
-        self.refresh_btn = QAction('Обновить список', self)
+        self.refresh_button = QAction('Обновить список', self)
         # Кнопка настроек сервера
         self.config_btn = QAction('Настройки сервера', self)
         # Кнопка вывода истории сообщений
@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
         # Тулбар
         self.toolbar = self.addToolBar('MainBar')
         self.toolbar.addAction(exitAction)
-        self.toolbar.addAction(self.refresh_btn)
+        self.toolbar.addAction(self.refresh_button)
         self.toolbar.addAction(self.show_history_button)
         self.toolbar.addAction(self.config_btn)
 
@@ -211,53 +211,3 @@ if __name__ == '__main__':
     history_window = HistoryWindow()
     config_window = ConfigWindow()
     sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
