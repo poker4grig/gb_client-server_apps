@@ -20,7 +20,7 @@ class AddContactDialog(QDialog):
         self.setFixedSize(350, 120)
         self.setWindowTitle('Выберите контакт для добавления: ')
         self.setAttribute(Qt.WA_DeleteOnClose)
-        self.setModel(True)
+        self.setModal(True)
 
         self.selector_label = QLabel('Выберите контакт для добавления:', self)
         self.selector_label.setFixedSize(200, 20)

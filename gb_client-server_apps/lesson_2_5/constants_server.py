@@ -21,11 +21,15 @@ PROBE = {
 
 PRESENCE_RESPONSE = {"response": 200}
 
-ERR_PRESENCE_RESPONSE = {
-    "response": 400,
-    "error": None
-}
-
-RESPONSE_202 = {"response": 202,
-                'data_list': None
+# Словари - ответы:
+# 200
+RESPONSE_200 = {'response': 200}
+# 202
+RESPONSE_202 = {'response': 202,
+                'data_list':None
                 }
+# 400
+RESPONSE_400 = {
+            'response': 400,
+            'error': None
+        }
