@@ -59,7 +59,7 @@ class RegisterUser(QDialog):
         self.show()
 
     def save_data(self):
-        """Проверить правильность ввода и сохранения в базу нового
+        """Проверяет правильность ввода и сохранения в базу нового
         пользователя.
         """
         if not self.client_name.text():
@@ -75,7 +75,7 @@ class RegisterUser(QDialog):
                 self, 'Ошибка', 'Пользователь уже существует.')
             return
         else:
-            # Генерируем хэш пароля, в качестве соли будем использовать логин в
+            # Генерирует хэш пароля, в качестве соли будет использовать логин в
             # нижнем регистре.
             passwd_bytes = self.client_passwd.text().encode('utf-8')
             salt = self.client_name.text().lower().encode('utf-8')

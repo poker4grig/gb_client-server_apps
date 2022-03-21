@@ -87,7 +87,7 @@ class MainWindow(QMainWindow):
         self.show()
 
     def create_users_model(self):
-        """Заполнить таблицу активных пользователей."""
+        """Заполняет таблицу активных пользователей."""
         list_users = self.database.active_users_list()
         _list = QStandardItemModel()
         _list.setHorizontalHeaderLabels(
@@ -110,25 +110,25 @@ class MainWindow(QMainWindow):
         self.active_clients_table.resizeRowsToContents()
 
     def show_statistics(self):
-        """Создать окно со статистикой клиентов."""
+        """Создает окно со статистикой клиентов."""
         global stat_window
         stat_window = StatWindow(self.database)
         stat_window.show()
 
     def server_config(self):
-        """Создать окно с настройками сервера."""
+        """Создает окно с настройками сервера."""
         global config_window
         # Создаём окно и заносим в него текущие параметры
         config_window = ConfigWindow(self.config)
 
     def reg_user(self):
-        """Создать окно регистрации пользователя."""
+        """Создает окно регистрации пользователя."""
         global reg_window
         reg_window = RegisterUser(self.database, self.server_thread)
         reg_window.show()
 
     def rem_user(self):
-        """Создать окно удаления пользователя."""
+        """Создает окно удаления пользователя."""
         global rem_window
         rem_window = DelUserDialog(self.database, self.server_thread)
         rem_window.show()

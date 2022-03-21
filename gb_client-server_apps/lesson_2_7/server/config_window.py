@@ -94,7 +94,7 @@ class ConfigWindow(QDialog):
         self.save_btn.clicked.connect(self.save_server_config)
 
     def open_file_dialog(self):
-        """Обработать открытие окна выбора папки."""
+        """Обрабатывает открытие окна выбора папки."""
         global dialog
         dialog = QFileDialog(self)
         path = dialog.getExistingDirectory()
@@ -106,7 +106,7 @@ class ConfigWindow(QDialog):
         """Метод сохранения настроек.
 
         Проверяет правильность введённых данных и
-        если всё правильно сохраняет ini файл.
+        если всё правильно сохраняет ``ini`` файл.
         """
         global config_window
         message = QMessageBox()

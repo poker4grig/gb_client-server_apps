@@ -2,8 +2,8 @@ import os
 import sys
 import time
 import unittest
-
-from ..functions_client import current_user, presence_msg, send_message
+from lesson_2_7.common.variables import PRESENCE
+from lesson_2_7.common.utils import send_message, get_message
 
 sys.path.append(os.path.join(os.getcwd(), '..'))
 
@@ -11,13 +11,13 @@ sys.path.append(os.path.join(os.getcwd(), '..'))
 class TestSendMessage(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.good_msg = presence_msg
+        self.good_msg = PRESENCE
         self.bad_msg = {
             "action": "bad",
             "time": time.time(),
             "user": {
-                "account_name": current_user[0],
-                "password": current_user[1]
+                "account_name": 'sergey',
+                "password": '123'
             }
         }
         self.check_user = {'action': 'presence',

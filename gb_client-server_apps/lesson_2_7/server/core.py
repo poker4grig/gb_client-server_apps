@@ -103,7 +103,7 @@ class MessageProcessor(threading.Thread):
         client.close()
 
     def init_socket(self):
-        """Инициализировать сокет."""
+        """Инициализирует сокет."""
         LOG.info(
             f'Запущен сервер, порт для подключений: {self.port}, '
             f'адрес с которого принимаются подключения: {self.addr}. '
@@ -118,7 +118,7 @@ class MessageProcessor(threading.Thread):
         self.sock.listen(MAX_CONNECTIONS)
 
     def process_message(self, message):
-        """Метод отправки сообщения клиенту."""
+        """Отправляет сообщения клиенту."""
         if message[DESTINATION] in self.names and self.names[
             message[DESTINATION]
         ] in self.listen_sockets:
@@ -143,7 +143,7 @@ class MessageProcessor(threading.Thread):
 
     @login_required
     def process_client_message(self, message, client):
-        """Обработать поступающие сообщения."""
+        """Обрабатывает поступающие сообщения."""
         LOG.debug(f'Разбор сообщения от клиента : {message}')
         # Если это сообщение о присутствии, принимаем и отвечаем
         if ACTION in message and message[ACTION] == PRESENCE and TIME in \
@@ -253,7 +253,7 @@ class MessageProcessor(threading.Thread):
                 self.remove_client(client)
 
     def autorize_user(self, message, sock):
-        """Реализовать авторизацию пользователей."""
+        """Реализует авторизацию пользователей."""
         # Если имя пользователя уже занято, то возвращаем 400
         LOG.debug(f'Start auth process for {message[USER]}')
         if message[USER][ACCOUNT_NAME] in self.names.keys():
@@ -330,7 +330,7 @@ class MessageProcessor(threading.Thread):
                 sock.close()
 
     def service_update_lists(self):
-        """Реализовать отправку сервисного сообщения 205 клиентам."""
+        """Реализует отправку сервисного сообщения '205' клиентам."""
         for client in self.names:
             try:
                 send_message(self.names[client], RESPONSE_205)

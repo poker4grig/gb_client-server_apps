@@ -2,8 +2,8 @@ import os
 import sys
 import time
 import unittest
-from ..functions_server import action_presence, err_presence_response, \
-    contact_list, check_request
+from lesson_2_7.common.variables import *
+from lesson_2_7.common.utils import get_message, send_message
 
 sys.path.append(os.path.join(os.getcwd(), '..'))
 

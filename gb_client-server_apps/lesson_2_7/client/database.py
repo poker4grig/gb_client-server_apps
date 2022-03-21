@@ -95,7 +95,7 @@ class ClientDatabase:
         self.session.commit()
 
     def add_contact(self, contact):
-        """Добавить контакт в базу данных."""
+        """Добавляет контакт в базу данных."""
         if not self.session.query(
                 self.Contacts).filter_by(
                 name=contact).count():
@@ -104,15 +104,15 @@ class ClientDatabase:
             self.session.commit()
 
     def contacts_clear(self):
-        """Очистить таблицу со списком контактов."""
+        """Очищает таблицу со списком контактов."""
         self.session.query(self.Contacts).delete()
 
     def del_contact(self, contact):
-        """Удалить определённый контакт."""
+        """Удаляет определённый контакт."""
         self.session.query(self.Contacts).filter_by(name=contact).delete()
 
     def add_users(self, users_list):
-        """Заполнить таблицу известных пользователей."""
+        """Заполняет таблицу известных пользователей."""
         self.session.query(self.KnownUsers).delete()
         for user in users_list:
             user_row = self.KnownUsers(user)
@@ -120,23 +120,23 @@ class ClientDatabase:
         self.session.commit()
 
     def save_message(self, contact, direction, message):
-        """Сохранить сообщение в базе данных."""
+        """Сохраняет сообщение в базе данных."""
         message_row = self.MessageStat(contact, direction, message)
         self.session.add(message_row)
         self.session.commit()
 
     def get_contacts(self):
-        """Возвратить список всех контактов."""
+        """Возвращает список всех контактов."""
         return [contact[0]
                 for contact in self.session.query(self.Contacts.name).all()]
 
     def get_users(self):
-        """Возвратить список всех известных пользователей."""
+        """Возвращает список всех известных пользователей."""
         return [user[0]
                 for user in self.session.query(self.KnownUsers.username).all()]
 
     def check_user(self, user):
-        """Проверить существует ли пользователь."""
+        """Проверяет, существует ли пользователь."""
         if self.session.query(
                 self.KnownUsers).filter_by(
                 username=user).count():
@@ -145,14 +145,14 @@ class ClientDatabase:
             return False
 
     def check_contact(self, contact):
-        """Проверить существует ли контакт."""
+        """Проверяет, существует ли контакт."""
         if self.session.query(self.Contacts).filter_by(name=contact).count():
             return True
         else:
             return False
 
     def get_history(self, contact):
-        """Возвратить историю сообщений с определённым пользователем."""
+        """Возвращает историю сообщений с определённым пользователем."""
         query = self.session.query(
             self.MessageStat).filter_by(
             contact=contact)

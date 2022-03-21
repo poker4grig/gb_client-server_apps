@@ -67,7 +67,7 @@ class ClientTransport(threading.Thread, QObject):
         self.running = True
 
     def connection_init(self, port, ip):
-        """Установить соединение с сервером."""
+        """Устанавливает соединение с сервером."""
         # Инициализация сокета и сообщение серверу о нашем появлении
         self.transport = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Таймаут необходим для освобождения сокета.
@@ -107,7 +107,7 @@ class ClientTransport(threading.Thread, QObject):
         # Получаем публичный ключ и декодируем его из байтов
         pubkey = self.keys.publickey().export_key().decode('ascii')
 
-        # Авторизируемся на сервере
+        # Авторизуемся на сервере.
         with socket_lock:
             presense = {
                 ACTION: PRESENCE,
@@ -145,7 +145,7 @@ class ClientTransport(threading.Thread, QObject):
                 raise ServerError('Сбой соединения в процессе авторизации.')
 
     def process_server_ans(self, message):
-        """Обработать поступающие сообщения с сервера."""
+        """Обрабатывает поступающие сообщения с сервера."""
         LOG.debug(f'Разбор сообщения от сервера: {message}')
 
         # Если это подтверждение чего-либо
@@ -174,7 +174,7 @@ class ClientTransport(threading.Thread, QObject):
             self.new_message.emit(message)
 
     def contacts_list_update(self):
-        """Метод обновляющий с сервера список контактов."""
+        """Обновляет с сервера список контактов."""
         self.database.contacts_clear()
         LOG.debug(f'Запрос контакт листа для пользователя {self.name}')
         req = {
@@ -194,7 +194,7 @@ class ClientTransport(threading.Thread, QObject):
             LOG.error('Не удалось обновить список контактов.')
 
     def user_list_update(self):
-        """Обновить с сервера список пользователей."""
+        """Обновляет с сервера список пользователей."""
         LOG.debug(f'Запрос списка известных пользователей {self.username}')
         req = {
             ACTION: USERS_REQUEST,
@@ -210,7 +210,7 @@ class ClientTransport(threading.Thread, QObject):
             LOG.error('Не удалось обновить список известных пользователей.')
 
     def key_request(self, user):
-        """Метод запрашивающий с сервера публичный ключ пользователя."""
+        """Запрашивает с сервера публичный ключ пользователя."""
         LOG.debug(f'Запрос публичного ключа для {user}')
         req = {
             ACTION: PUBLIC_KEY_REQUEST,
@@ -226,7 +226,7 @@ class ClientTransport(threading.Thread, QObject):
             LOG.error(f'Не удалось получить ключ собеседника{user}.')
 
     def add_contact(self, contact):
-        """Отправить на сервер сведения о добавлении контакта."""
+        """Отправляет на сервер сведения о добавлении контакта."""
         LOG.debug(f'Создание контакта {contact}')
         req = {
             ACTION: ADD_CONTACT,
@@ -239,7 +239,7 @@ class ClientTransport(threading.Thread, QObject):
             self.process_server_ans(get_message(self.transport))
 
     def remove_contact(self, contact):
-        """Отправить на сервер сведения об удалении контакта."""
+        """Отправляет на сервер сведения об удалении контакта."""
         LOG.debug(f'Удаление контакта {contact}')
         req = {
             ACTION: REMOVE_CONTACT,
@@ -252,7 +252,7 @@ class ClientTransport(threading.Thread, QObject):
             self.process_server_ans(get_message(self.transport))
 
     def transport_shutdown(self):
-        """Уведомить сервер о завершении работы клиента."""
+        """Уведомляет сервер о завершении работы клиента."""
         self.running = False
         message = {
             ACTION: EXIT,
@@ -268,7 +268,7 @@ class ClientTransport(threading.Thread, QObject):
         time.sleep(0.5)
 
     def send_message(self, to, message):
-        """Отправить на сервер сообщения для пользователя."""
+        """Отправляет на сервер сообщения для пользователя."""
         message_dict = {
             ACTION: MESSAGE,
             SENDER: self.username,

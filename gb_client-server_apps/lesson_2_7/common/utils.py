@@ -1,9 +1,10 @@
 """Модуль, содержащий общие функции приложения."""
 
-from .decos import log
-from .variables import MAX_PACKAGE_LENGTH, ENCODING
 import json
 import sys
+from .decos import log
+from .variables import MAX_PACKAGE_LENGTH, ENCODING
+
 
 sys.path.append('../')
 

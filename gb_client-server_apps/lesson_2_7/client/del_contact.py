@@ -42,7 +42,7 @@ class DelContactDialog(QDialog):
         self.btn_cancel.move(230, 60)
         self.btn_cancel.clicked.connect(self.close)
 
-        # заполнитель контактов для удаления
+        # заполнитель контактов для удаления.
         self.selector.addItems(sorted(self.database.get_contacts()))
 
 
