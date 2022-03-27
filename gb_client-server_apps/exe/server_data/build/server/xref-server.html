@@ -272,7 +272,6 @@ imports:
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
- &#8226;   <a href="#logs.config_server_log">logs.config_server_log</a>
  &#8226;   <a href="#operator">operator</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
@@ -286,9 +285,10 @@ imports:
  &#8226;   <a href="#server_data.common.decos">server_data.common.decos</a>
  &#8226;   <a href="#server_data.common.utils">server_data.common.utils</a>
  &#8226;   <a href="#server_data.common.variables">server_data.common.variables</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
- &#8226;   <a href="#server_data.server.database">server_data.server.database</a>
- &#8226;   <a href="#server_data.server.main_window">server_data.server.main_window</a>
+ &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
+ &#8226;   <a href="#server_data.server_data.database">server_data.server_data.database</a>
+ &#8226;   <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
  &#8226;   <a href="#sqlalchemy">sqlalchemy</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
  &#8226;   <a href="#sre_constants">sre_constants</a>
@@ -343,7 +343,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>'org.python'</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#pickle">pickle</a>
+    <a href="#copy">copy</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
 
   </div>
@@ -407,11 +407,11 @@ imported by:
  &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#server.py">server.py</a>
- &#8226;   <a href="#server_data.server.add_user">server_data.server.add_user</a>
- &#8226;   <a href="#server_data.server.config_window">server_data.server.config_window</a>
- &#8226;   <a href="#server_data.server.main_window">server_data.server.main_window</a>
- &#8226;   <a href="#server_data.server.remove_user">server_data.server.remove_user</a>
- &#8226;   <a href="#server_data.server.stat_window">server_data.server.stat_window</a>
+ &#8226;   <a href="#server_data.server_data.add_user">server_data.server_data.add_user</a>
+ &#8226;   <a href="#server_data.server_data.config_window">server_data.server_data.config_window</a>
+ &#8226;   <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
+ &#8226;   <a href="#server_data.server_data.remove_user">server_data.server_data.remove_user</a>
+ &#8226;   <a href="#server_data.server_data.stat_window">server_data.server_data.stat_window</a>
 
   </div>
 
@@ -430,9 +430,9 @@ imports:
 imported by:
     <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
- &#8226;   <a href="#server_data.server.main_window">server_data.server.main_window</a>
- &#8226;   <a href="#server_data.server.remove_user">server_data.server.remove_user</a>
- &#8226;   <a href="#server_data.server.stat_window">server_data.server.stat_window</a>
+ &#8226;   <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
+ &#8226;   <a href="#server_data.server_data.remove_user">server_data.server_data.remove_user</a>
+ &#8226;   <a href="#server_data.server_data.stat_window">server_data.server_data.stat_window</a>
 
   </div>
 
@@ -452,11 +452,11 @@ imports:
 imported by:
     <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#server.py">server.py</a>
- &#8226;   <a href="#server_data.server.add_user">server_data.server.add_user</a>
- &#8226;   <a href="#server_data.server.config_window">server_data.server.config_window</a>
- &#8226;   <a href="#server_data.server.main_window">server_data.server.main_window</a>
- &#8226;   <a href="#server_data.server.remove_user">server_data.server.remove_user</a>
- &#8226;   <a href="#server_data.server.stat_window">server_data.server.stat_window</a>
+ &#8226;   <a href="#server_data.server_data.add_user">server_data.server_data.add_user</a>
+ &#8226;   <a href="#server_data.server_data.config_window">server_data.server_data.config_window</a>
+ &#8226;   <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
+ &#8226;   <a href="#server_data.server_data.remove_user">server_data.server_data.remove_user</a>
+ &#8226;   <a href="#server_data.server_data.stat_window">server_data.server_data.stat_window</a>
 
   </div>
 
@@ -2620,8 +2620,8 @@ imported by:
  &#8226;   <a href="#plistlib">plistlib</a>
  &#8226;   <a href="#quopri">quopri</a>
  &#8226;   <a href="#secrets">secrets</a>
- &#8226;   <a href="#server_data.server.add_user">server_data.server.add_user</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.add_user">server_data.server_data.add_user</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#uu">uu</a>
  &#8226;   <a href="#zipfile">zipfile</a>
 
@@ -3310,8 +3310,8 @@ imported by:
   <a target="code" href="///C:/Python3/lib/copy.py" type="text/plain"><tt>copy</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#copyreg">copyreg</a>
- &#8226;   <a href="#org">org</a>
+    <a href="#'org.python'">'org.python'</a>
+ &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -3485,7 +3485,7 @@ imported by:
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#http.server">http.server</a>
  &#8226;   <a href="#plistlib">plistlib</a>
- &#8226;   <a href="#server_data.server.database">server_data.server.database</a>
+ &#8226;   <a href="#server_data.server_data.database">server_data.server_data.database</a>
  &#8226;   <a href="#smtplib">smtplib</a>
  &#8226;   <a href="#sqlalchemy.dialects.firebird.base">sqlalchemy.dialects.firebird.base</a>
  &#8226;   <a href="#sqlalchemy.dialects.mssql.base">sqlalchemy.dialects.mssql.base</a>
@@ -7388,7 +7388,7 @@ imports:
 imported by:
     <a href="#hmac">hmac</a>
  &#8226;   <a href="#random">random</a>
- &#8226;   <a href="#server_data.server.add_user">server_data.server.add_user</a>
+ &#8226;   <a href="#server_data.server_data.add_user">server_data.server_data.add_user</a>
  &#8226;   <a href="#sqlalchemy.util.langhelpers">sqlalchemy.util.langhelpers</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
  &#8226;   <a href="#uuid">uuid</a>
@@ -7433,7 +7433,7 @@ imports:
 imported by:
     <a href="#multiprocessing.connection">multiprocessing.connection</a>
  &#8226;   <a href="#secrets">secrets</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#smtplib">smtplib</a>
 
   </div>
@@ -7602,7 +7602,7 @@ imports:
  &#8226;   <a href="#importlib._bootstrap">importlib._bootstrap</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
  &#8226;   <a href="#importlib._common">importlib._common</a>
- &#8226;   <a href="#importlib.machinery">importlib.machinery</a>
+ &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#warnings">warnings</a>
@@ -7722,7 +7722,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#importlib.metadata">importlib.metadata</a>
+    <a href="#importlib">importlib</a>
+ &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.resources">importlib.resources</a>
  &#8226;   <a href="#importlib.util">importlib.util</a>
  &#8226;   <a href="#importlib_metadata">importlib_metadata</a>
@@ -7746,7 +7747,6 @@ imports:
   <div class="import">
 imported by:
     <a href="#ctypes.util">ctypes.util</a>
- &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#pkgutil">pkgutil</a>
@@ -8269,7 +8269,7 @@ imported by:
  &#8226;   <a href="#json.scanner">json.scanner</a>
  &#8226;   <a href="#pep517.compat">pep517.compat</a>
  &#8226;   <a href="#server_data.common.utils">server_data.common.utils</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#sqlalchemy.dialects.postgresql.asyncpg">sqlalchemy.dialects.postgresql.asyncpg</a>
  &#8226;   <a href="#sqlalchemy.sql.sqltypes">sqlalchemy.sql.sqltypes</a>
 
@@ -8438,7 +8438,6 @@ imported by:
  &#8226;   <a href="#lib2to3.pgen2.driver">lib2to3.pgen2.driver</a>
  &#8226;   <a href="#lib2to3.refactor">lib2to3.refactor</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
- &#8226;   <a href="#logs.config_server_log">logs.config_server_log</a>
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#pep517.build">pep517.build</a>
  &#8226;   <a href="#pep517.envbuild">pep517.envbuild</a>
@@ -8449,7 +8448,7 @@ imported by:
  &#8226;   <a href="#server_data.common.variables">server_data.common.variables</a>
  &#8226;   <a href="#server_data.logs.config_client_log">server_data.logs.config_client_log</a>
  &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#sqlalchemy.dialects.postgresql.psycopg2">sqlalchemy.dialects.postgresql.psycopg2</a>
  &#8226;   <a href="#sqlalchemy.ext.baked">sqlalchemy.ext.baked</a>
  &#8226;   <a href="#sqlalchemy.log">sqlalchemy.log</a>
@@ -8489,41 +8488,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#logs.config_server_log">logs.config_server_log</a>
- &#8226;   <a href="#server.py">server.py</a>
- &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="logs"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/logs/__init__.py" type="text/plain"><tt>logs</tt></a>
-<span class="moduletype">Package</span>  <div class="import">
-imported by:
-    <a href="#logs.config_server_log">logs.config_server_log</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="logs.config_server_log"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/logs/config_server_log.py" type="text/plain"><tt>logs.config_server_log</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#logging">logging</a>
- &#8226;   <a href="#logging.handlers">logging.handlers</a>
- &#8226;   <a href="#logs">logs</a>
- &#8226;   <a href="#os">os</a>
- &#8226;   <a href="#server_data.common.variables">server_data.common.variables</a>
- &#8226;   <a href="#sys">sys</a>
-
-  </div>
-  <div class="import">
-imported by:
     <a href="#server.py">server.py</a>
+ &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
 
   </div>
 
@@ -9674,7 +9640,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>org</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#copy">copy</a>
+    <a href="#pickle">pickle</a>
 
   </div>
 
@@ -9752,7 +9718,6 @@ imported by:
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
  &#8226;   <a href="#logging.handlers">logging.handlers</a>
- &#8226;   <a href="#logs.config_server_log">logs.config_server_log</a>
  &#8226;   <a href="#lzma">lzma</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
@@ -9800,8 +9765,8 @@ imported by:
  &#8226;   <a href="#server.py">server.py</a>
  &#8226;   <a href="#server_data.logs.config_client_log">server_data.logs.config_client_log</a>
  &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
- &#8226;   <a href="#server_data.server.config_window">server_data.server.config_window</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.config_window">server_data.server_data.config_window</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#socket">socket</a>
@@ -10131,8 +10096,7 @@ imported by:
   <a target="code" href="///C:/Python3/lib/pickle.py" type="text/plain"><tt>pickle</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#'org.python'">'org.python'</a>
- &#8226;   <a href="#_compat_pickle">_compat_pickle</a>
+    <a href="#_compat_pickle">_compat_pickle</a>
  &#8226;   <a href="#_pickle">_pickle</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#copyreg">copyreg</a>
@@ -10140,6 +10104,7 @@ imports:
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#io">io</a>
  &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#org">org</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#struct">struct</a>
@@ -10882,7 +10847,7 @@ imported by:
     <a href="#http.server">http.server</a>
  &#8226;   <a href="#pydoc">pydoc</a>
  &#8226;   <a href="#selectors">selectors</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#subprocess">subprocess</a>
 
   </div>
@@ -10923,7 +10888,7 @@ imported by:
 imported by:
     <a href="#server_data.common">server_data.common</a>
  &#8226;   <a href="#server_data.logs">server_data.logs</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
 
   </div>
 
@@ -10959,7 +10924,7 @@ imports:
  &#8226;   <a href="#server_data.common.variables">server_data.common.variables</a>
  &#8226;   <a href="#server_data.logs.config_client_log">server_data.logs.config_client_log</a>
  &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#sys">sys</a>
 
@@ -10968,7 +10933,7 @@ imports:
 imported by:
     <a href="#server.py">server.py</a>
  &#8226;   <a href="#server_data.common.utils">server_data.common.utils</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
 
   </div>
 
@@ -10986,7 +10951,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.core">server_data.server.core</a>
+    <a href="#server_data.server_data.core">server_data.server_data.core</a>
 
   </div>
 
@@ -11003,7 +10968,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.core">server_data.server.core</a>
+    <a href="#server_data.server_data.core">server_data.server_data.core</a>
 
   </div>
 
@@ -11024,7 +10989,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#server.py">server.py</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
 
   </div>
 
@@ -11041,13 +11006,12 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#logs.config_server_log">logs.config_server_log</a>
- &#8226;   <a href="#server.py">server.py</a>
+    <a href="#server.py">server.py</a>
  &#8226;   <a href="#server_data.common.decos">server_data.common.decos</a>
  &#8226;   <a href="#server_data.common.utils">server_data.common.utils</a>
  &#8226;   <a href="#server_data.logs.config_client_log">server_data.logs.config_client_log</a>
  &#8226;   <a href="#server_data.logs.config_server_log">server_data.logs.config_server_log</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
 
   </div>
 
@@ -11105,15 +11069,16 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.common.decos">server_data.common.decos</a>
+    <a href="#server.py">server.py</a>
+ &#8226;   <a href="#server_data.common.decos">server_data.common.decos</a>
 
   </div>
 
 </div>
 
 <div class="node">
-  <a name="server_data.server"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/__init__.py" type="text/plain"><tt>server_data.server</tt></a>
+  <a name="server_data.server_data"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/__init__.py" type="text/plain"><tt>server_data.server_data</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
 imports:
     <a href="#server_data">server_data</a>
@@ -11121,60 +11086,60 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.add_user">server_data.server.add_user</a>
- &#8226;   <a href="#server_data.server.config_window">server_data.server.config_window</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
- &#8226;   <a href="#server_data.server.database">server_data.server.database</a>
- &#8226;   <a href="#server_data.server.main_window">server_data.server.main_window</a>
- &#8226;   <a href="#server_data.server.remove_user">server_data.server.remove_user</a>
- &#8226;   <a href="#server_data.server.stat_window">server_data.server.stat_window</a>
+    <a href="#server_data.server_data.add_user">server_data.server_data.add_user</a>
+ &#8226;   <a href="#server_data.server_data.config_window">server_data.server_data.config_window</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
+ &#8226;   <a href="#server_data.server_data.database">server_data.server_data.database</a>
+ &#8226;   <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
+ &#8226;   <a href="#server_data.server_data.remove_user">server_data.server_data.remove_user</a>
+ &#8226;   <a href="#server_data.server_data.stat_window">server_data.server_data.stat_window</a>
 
   </div>
 
 </div>
 
 <div class="node">
-  <a name="server_data.server.add_user"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/add_user.py" type="text/plain"><tt>server_data.server.add_user</tt></a>
+  <a name="server_data.server_data.add_user"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/add_user.py" type="text/plain"><tt>server_data.server_data.add_user</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#binascii">binascii</a>
  &#8226;   <a href="#hashlib">hashlib</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.main_window">server_data.server.main_window</a>
+    <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
 
   </div>
 
 </div>
 
 <div class="node">
-  <a name="server_data.server.config_window"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/config_window.py" type="text/plain"><tt>server_data.server.config_window</tt></a>
+  <a name="server_data.server_data.config_window"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/config_window.py" type="text/plain"><tt>server_data.server_data.config_window</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
  &#8226;   <a href="#os">os</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.main_window">server_data.server.main_window</a>
+    <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
 
   </div>
 
 </div>
 
 <div class="node">
-  <a name="server_data.server.core"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/core.py" type="text/plain"><tt>server_data.server.core</tt></a>
+  <a name="server_data.server_data.core"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/core.py" type="text/plain"><tt>server_data.server_data.core</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#binascii">binascii</a>
@@ -11188,7 +11153,7 @@ imports:
  &#8226;   <a href="#server_data.common.metaclasses">server_data.common.metaclasses</a>
  &#8226;   <a href="#server_data.common.utils">server_data.common.utils</a>
  &#8226;   <a href="#server_data.common.variables">server_data.common.variables</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#threading">threading</a>
 
@@ -11203,12 +11168,12 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="server_data.server.database"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/database.py" type="text/plain"><tt>server_data.server.database</tt></a>
+  <a name="server_data.server_data.database"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/database.py" type="text/plain"><tt>server_data.server_data.database</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#datetime">datetime</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
  &#8226;   <a href="#sqlalchemy">sqlalchemy</a>
  &#8226;   <a href="#sqlalchemy.orm">sqlalchemy.orm</a>
  &#8226;   <a href="#sqlalchemy.orm.mapper">sqlalchemy.orm.mapper</a>
@@ -11225,18 +11190,18 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="server_data.server.main_window"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/main_window.py" type="text/plain"><tt>server_data.server.main_window</tt></a>
+  <a name="server_data.server_data.main_window"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/main_window.py" type="text/plain"><tt>server_data.server_data.main_window</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
- &#8226;   <a href="#server_data.server.add_user">server_data.server.add_user</a>
- &#8226;   <a href="#server_data.server.config_window">server_data.server.config_window</a>
- &#8226;   <a href="#server_data.server.remove_user">server_data.server.remove_user</a>
- &#8226;   <a href="#server_data.server.stat_window">server_data.server.stat_window</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
+ &#8226;   <a href="#server_data.server_data.add_user">server_data.server_data.add_user</a>
+ &#8226;   <a href="#server_data.server_data.config_window">server_data.server_data.config_window</a>
+ &#8226;   <a href="#server_data.server_data.remove_user">server_data.server_data.remove_user</a>
+ &#8226;   <a href="#server_data.server_data.stat_window">server_data.server_data.stat_window</a>
 
   </div>
   <div class="import">
@@ -11248,38 +11213,38 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="server_data.server.remove_user"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/remove_user.py" type="text/plain"><tt>server_data.server.remove_user</tt></a>
+  <a name="server_data.server_data.remove_user"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/remove_user.py" type="text/plain"><tt>server_data.server_data.remove_user</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.main_window">server_data.server.main_window</a>
+    <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
 
   </div>
 
 </div>
 
 <div class="node">
-  <a name="server_data.server.stat_window"></a>
-  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server/stat_window.py" type="text/plain"><tt>server_data.server.stat_window</tt></a>
+  <a name="server_data.server_data.stat_window"></a>
+  <a target="code" href="///C:/GB_GIT/gb_client-server_apps/gb_client-server_apps/exe/server_data/server_data/stat_window.py" type="text/plain"><tt>server_data.server_data.stat_window</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#PyQt5.QtCore">PyQt5.QtCore</a>
  &#8226;   <a href="#PyQt5.QtGui">PyQt5.QtGui</a>
  &#8226;   <a href="#PyQt5.QtWidgets">PyQt5.QtWidgets</a>
- &#8226;   <a href="#server_data.server">server_data.server</a>
+ &#8226;   <a href="#server_data.server_data">server_data.server_data</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.main_window">server_data.server.main_window</a>
+    <a href="#server_data.server_data.main_window">server_data.server_data.main_window</a>
 
   </div>
 
@@ -11459,7 +11424,7 @@ imported by:
  &#8226;   <a href="#multiprocessing.resource_sharer">multiprocessing.resource_sharer</a>
  &#8226;   <a href="#platform">platform</a>
  &#8226;   <a href="#server_data.common.decos">server_data.common.decos</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#smtplib">smtplib</a>
  &#8226;   <a href="#socketserver">socketserver</a>
  &#8226;   <a href="#ssl">ssl</a>
@@ -11530,7 +11495,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#server.py">server.py</a>
- &#8226;   <a href="#server_data.server.database">server_data.server.database</a>
+ &#8226;   <a href="#server_data.server_data.database">server_data.server_data.database</a>
  &#8226;   <a href="#sqlalchemy">sqlalchemy</a>
  &#8226;   <a href="#sqlalchemy.cimmutabledict">sqlalchemy.cimmutabledict</a>
  &#8226;   <a href="#sqlalchemy.connectors">sqlalchemy.connectors</a>
@@ -14317,7 +14282,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.database">server_data.server.database</a>
+    <a href="#server_data.server_data.database">server_data.server_data.database</a>
  &#8226;   <a href="#sqlalchemy.ext.asyncio.events">sqlalchemy.ext.asyncio.events</a>
  &#8226;   <a href="#sqlalchemy.ext.asyncio.session">sqlalchemy.ext.asyncio.session</a>
  &#8226;   <a href="#sqlalchemy.ext.baked">sqlalchemy.ext.baked</a>
@@ -14975,7 +14940,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.database">server_data.server.database</a>
+    <a href="#server_data.server_data.database">server_data.server_data.database</a>
  &#8226;   <a href="#sqlalchemy.orm">sqlalchemy.orm</a>
  &#8226;   <a href="#sqlalchemy.orm.decl_api">sqlalchemy.orm.decl_api</a>
  &#8226;   <a href="#sqlalchemy.orm.decl_base">sqlalchemy.orm.decl_base</a>
@@ -15688,7 +15653,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.database">server_data.server.database</a>
+    <a href="#server_data.server_data.database">server_data.server_data.database</a>
  &#8226;   <a href="#sqlalchemy">sqlalchemy</a>
  &#8226;   <a href="#sqlalchemy.dialects.firebird.base">sqlalchemy.dialects.firebird.base</a>
  &#8226;   <a href="#sqlalchemy.dialects.mssql.base">sqlalchemy.dialects.mssql.base</a>
@@ -16035,7 +16000,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#server_data.server.database">server_data.server.database</a>
+    <a href="#server_data.server_data.database">server_data.server_data.database</a>
  &#8226;   <a href="#sqlalchemy">sqlalchemy</a>
  &#8226;   <a href="#sqlalchemy.sql">sqlalchemy.sql</a>
 
@@ -17668,7 +17633,6 @@ imported by:
  &#8226;   <a href="#linecache">linecache</a>
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
- &#8226;   <a href="#logs.config_server_log">logs.config_server_log</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
  &#8226;   <a href="#multiprocessing">multiprocessing</a>
  &#8226;   <a href="#multiprocessing.connection">multiprocessing.connection</a>
@@ -17966,7 +17930,7 @@ imported by:
  &#8226;   <a href="#pep517.wrappers">pep517.wrappers</a>
  &#8226;   <a href="#pydoc">pydoc</a>
  &#8226;   <a href="#queue">queue</a>
- &#8226;   <a href="#server_data.server.core">server_data.server.core</a>
+ &#8226;   <a href="#server_data.server_data.core">server_data.server_data.core</a>
  &#8226;   <a href="#socketserver">socketserver</a>
  &#8226;   <a href="#sqlalchemy.util.compat">sqlalchemy.util.compat</a>
  &#8226;   <a href="#subprocess">subprocess</a>

@@ -4,7 +4,7 @@ import client_data.logs.config_client_log
 import client_data.logs.config_server_log
 import sys
 
-sys.path.append('../')
+# sys.path.append('../')
 
 # метод определения модуля, источника запуска.
 if sys.argv[0].find('client') == -1:
@@ -45,7 +45,7 @@ def login_required(func):
     def checker(*args, **kwargs):
         # проверяем, что первый аргумент - экземпляр MessageProcessor
         # Импортить необходимо тут, иначе ошибка рекурсивного импорта.
-        from server_data.server.core import MessageProcessor
+        from server_data.server_data.core import MessageProcessor
         from client_data.common.variables import ACTION, PRESENCE
         if isinstance(args[0], MessageProcessor):
             found = False

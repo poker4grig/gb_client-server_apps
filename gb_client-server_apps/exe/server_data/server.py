@@ -3,13 +3,13 @@ import os
 import argparse
 import logging
 import configparser
-import logs.config_server_log
+import server_data.logs.config_server_log
 from server_data.common.utils import get_message, send_message
-from server_data.common.variables import DEFAULT_PORT
+from common.variables import DEFAULT_PORT
 from server_data.common.decos import log
-from server_data.server.core import MessageProcessor
-from server_data.server.database import ServerStorage
-from server_data.server.main_window import MainWindow
+from server_data.server_data.core import MessageProcessor
+from server_data.server_data.database import ServerStorage
+from server_data.server_data.main_window import MainWindow
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt
 

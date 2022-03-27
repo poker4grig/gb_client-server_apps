@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append('../')
+# sys.path.append('../')
 import logging
 from server_data.common.variables import LOGGING_LEVEL
 

@@ -6,13 +6,13 @@ import os
 from Crypto.PublicKey import RSA
 from PyQt5.QtWidgets import QApplication, QMessageBox
 
-from client_data.common.variables import *
+from client_data.common.variables import DEFAULT_PORT, DEFAULT_IP_ADDRESS
 from client_data.common.errors import ServerError
 from client_data.common.decos import log
-from client_data.client.database import ClientDatabase
-from client_data.client.transport import ClientTransport
-from client_data.client.main_window import ClientMainWindow
-from client_data.client.start_dialog import UserNameDialog
+from client_data.client_data.database import ClientDatabase
+from client_data.client_data.transport import ClientTransport
+from client_data.client_data.main_window import ClientMainWindow
+from client_data.client_data.start_dialog import UserNameDialog
 
 # Инициализация клиентского логера
 logger = logging.getLogger('client')

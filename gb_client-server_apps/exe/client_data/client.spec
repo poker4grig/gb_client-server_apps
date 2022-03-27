@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['client.py'],
-             pathex=['.'],
+             pathex=[],
              binaries=[],
              datas=[],
              hiddenimports=['sqlalchemy', 'logging.handlers', 'Crypto.Cipher.PKCS1_OAEP', 'Crypto.PublicKey.RSA'],
