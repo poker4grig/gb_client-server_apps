@@ -1,8 +1,0 @@
-2022-03-27 22:18:07,237 DEBUG decos.py Была вызвана функция main c параметрами () , {}. Вызов из модуля __main__
-2022-03-27 22:18:07,237 DEBUG decos.py Была вызвана функция config_load c параметрами () , {}. Вызов из модуля __main__
-2022-03-27 22:18:07,237 DEBUG decos.py Была вызвана функция arg_parser c параметрами ('7777', '') , {}. Вызов из модуля __main__
-2022-03-27 22:19:10,931 DEBUG decos.py Была вызвана функция get_message c параметрами (<socket.socket fd=1868, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 59737)>,) , {}. Вызов из модуля server_data.common.utils
-2022-03-27 22:20:13,127 DEBUG decos.py Была вызвана функция get_message c параметрами (<socket.socket fd=1868, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 59740)>,) , {}. Вызов из модуля server_data.common.utils
-2022-03-27 22:30:12,066 DEBUG decos.py Была вызвана функция main c параметрами () , {}. Вызов из модуля __main__
-2022-03-27 22:30:12,066 DEBUG decos.py Была вызвана функция config_load c параметрами () , {}. Вызов из модуля __main__
-2022-03-27 22:30:12,067 DEBUG decos.py Была вызвана функция arg_parser c параметрами ('7777', '') , {}. Вызов из модуля __main__

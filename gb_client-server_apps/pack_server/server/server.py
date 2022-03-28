@@ -11,9 +11,9 @@ from PyQt5.QtCore import Qt
 
 from common.decos import log
 from common.variables import DEFAULT_PORT
-from server.core import MessageProcessor
-from server.database import ServerStorage
-from server.main_window import MainWindow
+from server_data.core import MessageProcessor
+from server_data.database import ServerStorage
+from server_data.main_window import MainWindow
 
 path_main = os.getcwd()
 sys.path.insert(0, f'{path_main}/common')

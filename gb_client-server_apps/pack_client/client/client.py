@@ -10,10 +10,10 @@ from PyQt5.QtWidgets import QApplication, QMessageBox
 from common.errors import ServerError
 from common.decos import log
 from common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT
-from client.database import ClientDatabase
-from client.transport import ClientTransport
-from client.main_window import ClientMainWindow
-from client.start_dialog import UserNameDialog
+from client_data.database import ClientDatabase
+from client_data.transport import ClientTransport
+from client_data.main_window import ClientMainWindow
+from client_data.start_dialog import UserNameDialog
 
 LOG = logging.getLogger("app.client")
 

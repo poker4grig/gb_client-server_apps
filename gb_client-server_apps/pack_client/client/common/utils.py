@@ -2,8 +2,8 @@
 
 import json
 import sys
-from decos import log
-from variables import MAX_PACKAGE_LENGTH, ENCODING
+from common.decos import log
+from common.variables import MAX_PACKAGE_LENGTH, ENCODING
 
 
 sys.path.append('../client/')
